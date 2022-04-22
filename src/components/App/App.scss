@@ -1,8 +1,15 @@
+@font-face {
+  font-family: "My font";
+  src: url("../../../public/fonts/mysoul-regular-webfont.woff") format("woff");
+  src: url("../../../public/fonts/mysoul-regular-webfont.woff2") format("woff2");
+}
+
 #root {
   background-color: red;
   height: 300px;
-  font-size: 24px;
-  font-family: "Roboto", sans-serif;
+  font-family: "My font", sans-serif;
+  color: blue;
+  font-size: 48px;
   background-image: url("../../../public/images/photo.jpg");
 }
 

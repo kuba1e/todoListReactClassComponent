@@ -13,6 +13,9 @@ module.exports = (env = {}) => {
         : { loader: "style-loader" },
       {
         loader: "css-loader",
+        options: {
+          sourceMap: mode !== "production",
+        },
       },
     ];
   };
@@ -45,6 +48,7 @@ module.exports = (env = {}) => {
       filename: mode === "production" ? "[name].[hash].min.js" : undefined,
     },
     devServer: {
+      static: "./dist",
       watchFiles: ["./public/*.html"],
       hot: true,
       open: true,
@@ -91,24 +95,18 @@ module.exports = (env = {}) => {
         //loading images
         {
           test: /\.(jpg|jpeg|png|svg)$/i,
-          use: [
-            {
-              loader: "file-loader",
-              options: {
-                outputPath: "images",
-                name(resourcePath, resourceQuery) {
-                  // `resourcePath` - `/absolute/path/to/file.js`
-                  // `resourceQuery` - `?foo=bar`
-
-                  if (mode === "development") {
-                    return "[name].[ext]";
-                  }
-
-                  return "[contenthash].[ext]";
-                },
-              },
-            },
-          ],
+          type: "asset/resource",
+          generator: {
+            filename: "images/[hash][ext][query]",
+          },
+        },
+        //loading fonts
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: "asset/resource",
+          generator: {
+            filename: "fonts/[hash][ext][query]",
+          },
         },
       ],
     },
