@@ -32,7 +32,7 @@ module.exports = (env = {}) => {
     if (mode === "production") {
       plugins.push(
         new MiniCssExtractPlugin({
-          filename: "[name].[hash].min.css",
+          filename: "css/[name].[hash].min.css",
         })
       );
     }
@@ -45,7 +45,7 @@ module.exports = (env = {}) => {
     entry: ["@babel/polyfill", "./src/index.jsx"],
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: mode === "production" ? "[name].[hash].min.js" : undefined,
+      filename: mode === "production" ? "js/[name].[hash].min.js" : undefined,
     },
     devServer: {
       static: "./dist",
