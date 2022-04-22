@@ -100,6 +100,7 @@ module.exports = (env = {}) => {
             filename: "images/[hash][ext][query]",
           },
         },
+        //loading icons
         {
           test: /\.(svg)$/i,
           type: "asset/resource",
