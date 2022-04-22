@@ -1,3 +1,12 @@
 #root {
-  background-color: burlywood;
+  background-color: red;
+  height: 300px;
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  background-image: url("../../../public/images/photo.jpg");
+}
+
+#name::placeholder {
+  color: gray;
+  font-size: 24px;
 }
