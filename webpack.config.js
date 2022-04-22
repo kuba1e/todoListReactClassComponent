@@ -73,7 +73,7 @@ module.exports = (env = {}) => {
           use: {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-react", "@babel/preset-env"],
+              presets: ["@babel/preset-env", "@babel/preset-react"],
             },
           },
         },
@@ -98,6 +98,13 @@ module.exports = (env = {}) => {
           type: "asset/resource",
           generator: {
             filename: "images/[hash][ext][query]",
+          },
+        },
+        {
+          test: /\.(svg)$/i,
+          type: "asset/resource",
+          generator: {
+            filename: "images/icons/[hash][ext][query]",
           },
         },
         //loading fonts
