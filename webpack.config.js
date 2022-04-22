@@ -48,9 +48,7 @@ module.exports = (env = {}) => {
       filename: mode === "production" ? "js/[name].[hash].min.js" : undefined,
     },
     devServer: {
-      static: "./dist",
       watchFiles: ["./public/*.html"],
-      hot: true,
       open: true,
       port: 3000,
     },
