@@ -5,14 +5,14 @@ import Button from '../UI/Button'
 
 export default class TodoListItem extends Component {
   state = {
-    isButtonActive: false,
+    isButtonActive: false
   }
 
   render() {
     const {
       todo: { label, id, done },
       onDelete,
-      onToggleDone,
+      onToggleDone
     } = this.props
 
     const { isButtonActive } = this.state
@@ -36,7 +36,7 @@ export default class TodoListItem extends Component {
           {label}
         </p>
         <Button
-          className={`delete-btn ${isButtonActive ? 'active' : ''}`}
+          className={`delete-btn ${isButtonActive ? 'delete-btn--active' : ''}`}
           onClick={() => onDelete(id)}
         ></Button>
       </li>
