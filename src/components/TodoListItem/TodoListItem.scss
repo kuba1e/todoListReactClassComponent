@@ -1,0 +1,42 @@
+.todo__list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ededed;
+  &-text {
+    word-break: break-all;
+    flex-grow: 1;
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 0;
+    padding: 15px;
+    &--done {
+      text-decoration: line-through;
+      color: #d9d9d9;
+    }
+  }
+}
+
+.delete-btn {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+}
+
+.delete-btn::after {
+  content: '×';
+}
+
+.delete-btn.active {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.delete-btn.active:hover {
+  color: #af5b5e;
+}
