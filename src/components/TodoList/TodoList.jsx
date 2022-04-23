@@ -23,10 +23,6 @@ class TodoList extends Component {
     }
   }
 
-  makeError = () => {
-    throw new Error('dsf')
-  }
-
   render() {
     const { todos = [], filterValue, deleteTodo, toggleDoneTodo } = this.props
     const todosForRendering = getFilteredTodosList(filterValue, todos)
@@ -43,7 +39,6 @@ class TodoList extends Component {
             />
           )
         })}
-        <button onClick={this.makeError}>error</button>
       </ul>
     )
   }
