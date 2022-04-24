@@ -44,13 +44,14 @@
 .clear-completed-btn {
   background-color: transparent;
   border: none;
-  cursor: pointer;
   color: #777;
   opacity: 0;
+  cursor: auto;
   &:hover {
     text-decoration: underline;
   }
   &--active {
     opacity: 1;
+    cursor: pointer;
   }
 }
