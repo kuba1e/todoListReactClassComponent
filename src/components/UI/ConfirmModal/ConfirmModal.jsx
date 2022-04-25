@@ -6,7 +6,6 @@ import Button from '../Button'
 class ModalOverlay extends Component {
   render() {
     const { children, onConfirm, onDismiss } = this.props
-    console.log(onConfirm)
     return (
       <div
         className='backdrop'
@@ -17,6 +16,7 @@ class ModalOverlay extends Component {
         }}
       >
         <div className='modal-overlay'>
+          <Button className='close-btn' onClick={onDismiss}></Button>
           <p className='modal-overlay__text'>{children}</p>
           <div className='modal-overlay__control'>
             <Button className='confirm-btn' onClick={onConfirm}>

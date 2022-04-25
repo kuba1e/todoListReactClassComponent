@@ -15,6 +15,7 @@
 .modal-overlay {
   width: 40%;
   height: 30%;
+  position: relative;
   background-color: #fff;
   padding: 10px;
   border-radius: 3px;
@@ -37,7 +38,8 @@
 
 .confirm-btn,
 .dismiss-btn {
-  padding: 5px 20px;
+  width: 100px;
+  height: 35px;
   border-radius: 3px;
 }
 
@@ -47,4 +49,23 @@
 
 .dismiss-btn {
   background-color: rgb(241, 188, 188);
+}
+
+.close-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 1;
+  font-size: 40px;
+  text-align: center;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  &::after {
+    content: '×';
+  }
+  &:hover {
+    color: #af5b5e;
+  }
 }
