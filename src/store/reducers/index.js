@@ -1,2 +1,2 @@
-import { reducer } from "./reducer";
-export default reducer
+import { todoReducer } from './reducer'
+export default todoReducer

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './TodoList.scss'
+import PropTypes from 'prop-types'
 import TodoListItem from '../TodoListItem'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -42,6 +43,14 @@ class TodoList extends Component {
       </ul>
     )
   }
+}
+
+TodoList.propTypes = {
+  getTodosFromLocalStorage: PropTypes.func,
+  todos: PropTypes.array,
+  filterValue: PropTypes.string,
+  deleteTodo: PropTypes.func,
+  toggleDoneTodo: PropTypes.func
 }
 
 const mapStateToProps = ({ todos, filterValue }) => {

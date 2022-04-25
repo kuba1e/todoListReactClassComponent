@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import ReactDOM from 'react-dom'
 import './ConfirmModal.scss'
+import PropTypes from 'prop-types'
+import ReactDOM from 'react-dom'
 import Button from '../Button'
 
 class ModalOverlay extends Component {
@@ -47,4 +48,16 @@ export default class ConfirmModal extends Component {
       </Fragment>
     )
   }
+}
+
+ModalOverlay.propTypes = {
+  children: PropTypes.node,
+  onConfirm: PropTypes.func,
+  onDismiss: PropTypes.func
+}
+
+ConfirmModal.propTypes = {
+  onConfirm: PropTypes.func,
+  onDismiss: PropTypes.func,
+  children: PropTypes.node
 }

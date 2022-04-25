@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Checkbox.scss'
+import PropTypes from 'prop-types'
 
 export default class Checkbox extends Component {
   render() {
@@ -19,4 +20,11 @@ export default class Checkbox extends Component {
       </div>
     )
   }
+}
+
+Checkbox.propTypes = {
+  className: PropTypes.string,
+  onChange: PropTypes.func,
+  checked: PropTypes.bool,
+  children: PropTypes.node
 }

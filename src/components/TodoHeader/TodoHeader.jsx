@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './TodoHeader.scss'
+import PropTypes from 'prop-types'
 import Button from '../UI/Button'
 import TodoAddForm from '../TodoAddForm'
 import { bindActionCreators } from 'redux'
@@ -37,6 +38,11 @@ class TodoHeader extends Component {
       </div>
     )
   }
+}
+
+TodoHeader.propTypes = {
+  toggleAllDoneTodo: PropTypes.func,
+  todos: PropTypes.array
 }
 
 const mapStateToProps = ({ todos }) => {

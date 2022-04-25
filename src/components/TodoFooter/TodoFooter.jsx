@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './TodoFooter.scss'
+import PropTypes from 'prop-types'
 import Button from '../UI/Button'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -23,7 +24,6 @@ const filters = [
 class TodoFooter extends Component {
   render() {
     const { setFilterValue, clearCompleted, todos, filterValue } = this.props
-
     return (
       <div className='todo__control'>
         <div className='todo__control-count'>
@@ -62,6 +62,13 @@ class TodoFooter extends Component {
       </div>
     )
   }
+}
+
+TodoFooter.propTypes = {
+  setFilterValue: PropTypes.func,
+  clearCompleted: PropTypes.func,
+  todos: PropTypes.array,
+  filterValue: PropTypes.string
 }
 
 const mapStateToProps = ({ todos, filterValue }) => {

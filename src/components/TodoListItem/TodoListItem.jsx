@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import './TodoListItem.scss'
+import PropTypes from 'prop-types'
 import Checkbox from '../UI/Checkbox'
 import Button from '../UI/Button'
 import ConfirmModal from '../UI/ConfirmModal'
@@ -69,4 +70,10 @@ export default class TodoListItem extends Component {
       </Fragment>
     )
   }
+}
+
+TodoListItem.propTypes = {
+  todo: PropTypes.object,
+  onToggleDone: PropTypes.func,
+  onDelete: PropTypes.func
 }

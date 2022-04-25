@@ -10,15 +10,15 @@ module.exports = (env = {}) => {
     return [
       mode === 'production'
         ? {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
           }
         : { loader: 'style-loader' },
       {
         loader: 'css-loader',
         options: {
-          sourceMap: mode !== 'production',
-        },
-      },
+          sourceMap: mode !== 'production'
+        }
+      }
     ]
   }
 
@@ -26,15 +26,15 @@ module.exports = (env = {}) => {
     const plugins = [
       new HTMLWebpackPlugin({
         title: 'Todos',
-        template: './public/index.html',
+        template: './public/index.html'
       }),
-      new CleanWebpackPlugin(),
+      new CleanWebpackPlugin()
     ]
 
     if (mode === 'production') {
       plugins.push(
         new MiniCssExtractPlugin({
-          filename: 'css/[name].[hash].min.css',
+          filename: 'css/[name].[hash].min.css'
         })
       )
     }
@@ -47,12 +47,12 @@ module.exports = (env = {}) => {
     entry: ['@babel/polyfill', './src/index.jsx'],
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: mode === 'production' ? 'js/[name].[hash].min.js' : undefined,
+      filename: mode === 'production' ? 'js/[name].[hash].min.js' : undefined
     },
     devServer: {
       watchFiles: ['./public/*.html'],
       open: true,
-      port: 3000,
+      port: 3000
     },
     plugins: getPlugins(),
     module: {
@@ -63,9 +63,9 @@ module.exports = (env = {}) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
-            },
-          },
+              presets: ['@babel/preset-env']
+            }
+          }
         },
         {
           test: /\.m?jsx$/,
@@ -73,9 +73,9 @@ module.exports = (env = {}) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react'],
-            },
-          },
+              presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+          }
         },
         {
           test: /\.s[ac]ss$/i,
@@ -85,40 +85,40 @@ module.exports = (env = {}) => {
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
-                  plugins: [['autoprefixer']],
-                },
-              },
+                  plugins: [['autoprefixer']]
+                }
+              }
             },
             {
-              loader: 'sass-loader',
-            },
-          ],
+              loader: 'sass-loader'
+            }
+          ]
         },
-        //loading images
+        // loading images
         {
           test: /\.(jpg|jpeg|png)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'images/[hash][ext][query]',
-          },
+            filename: 'images/[hash][ext][query]'
+          }
         },
-        //loading icons
+        // loading icons
         {
           test: /\.(svg)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'images/icons/[hash][ext][query]',
-          },
+            filename: 'images/icons/[hash][ext][query]'
+          }
         },
-        //loading fonts
+        // loading fonts
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/i,
           type: 'asset/resource',
           generator: {
-            filename: 'fonts/[hash][ext][query]',
-          },
-        },
-      ],
-    },
+            filename: 'fonts/[hash][ext][query]'
+          }
+        }
+      ]
+    }
   }
 }

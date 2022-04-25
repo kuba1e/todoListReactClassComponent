@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ErrorIndicator from '../ErrorIndicator'
+import PropTypes from 'prop-types'
 
 export default class ErrorBoundary extends Component {
   state = {
@@ -19,4 +20,8 @@ export default class ErrorBoundary extends Component {
 
     return content
   }
+}
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node
 }

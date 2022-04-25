@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './TodoAddForm.scss'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addTodo } from '../../store/actions'
@@ -32,6 +33,10 @@ class TodoAddForm extends Component {
       </form>
     )
   }
+}
+
+TodoAddForm.propTypes = {
+  addTodo: PropTypes.func
 }
 
 const mapDispatchToProps = (dispatch) => {

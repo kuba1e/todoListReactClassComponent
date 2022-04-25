@@ -1,3 +1,13 @@
-import { getCompletedQuantity,getTodoCount, getFilteredTodosList, areAllCompleted } from "./helpers";
+import {
+  getCompletedQuantity,
+  getTodoCount,
+  getFilteredTodosList,
+  areAllCompleted
+} from './helpers'
 
-export {getCompletedQuantity, getTodoCount, getFilteredTodosList, areAllCompleted}
+export {
+  getCompletedQuantity,
+  getTodoCount,
+  getFilteredTodosList,
+  areAllCompleted
+}

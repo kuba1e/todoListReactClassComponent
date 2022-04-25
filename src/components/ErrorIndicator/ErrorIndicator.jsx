@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class ErrorIndicator extends Component {
   render() {
@@ -6,4 +7,8 @@ export default class ErrorIndicator extends Component {
 
     return <p>Ooops, something went wrong, error:{error}</p>
   }
+}
+
+ErrorIndicator.propTypes = {
+  error: PropTypes.string
 }

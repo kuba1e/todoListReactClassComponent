@@ -1,2 +1,2 @@
-import ErrorIndicator from "./ErrorIndicator.jsx";
+import ErrorIndicator from './ErrorIndicator.jsx'
 export default ErrorIndicator

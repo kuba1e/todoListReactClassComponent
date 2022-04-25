@@ -1,2 +1,2 @@
-import TodoFooter from "./TodoFooter.jsx";
+import TodoFooter from './TodoFooter.jsx'
 export default TodoFooter

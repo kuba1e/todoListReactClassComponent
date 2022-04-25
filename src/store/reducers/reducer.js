@@ -73,7 +73,7 @@ const initialState = {
   filterValue: 'all'
 }
 
-export const reducer = (state = initialState, { type, payload }) => {
+export const todoReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ACTION_ADD_TO_DO:
       return {
