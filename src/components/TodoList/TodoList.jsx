@@ -58,7 +58,7 @@ class TodoList extends Component {
   }
 
   render() {
-    const { todos = [], filterValue, toggleDoneTodo } = this.props
+    const { todos, filterValue, toggleDoneTodo } = this.props
     const { isConfirmModalActive } = this.state
     const todosForRendering = getFilteredTodosList(filterValue, todos)
 
