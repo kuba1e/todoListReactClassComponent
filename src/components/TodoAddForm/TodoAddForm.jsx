@@ -21,40 +21,57 @@ class TodoAddForm extends Component {
   componentDidUpdate(prevProps) {
     const { editedValue } = this.props
     if (prevProps.editedValue !== editedValue) {
-      this.setState(editedValue)
+      const { label } = editedValue
+      this.setState({ label })
     }
   }
 
   render() {
     const { addTodo, editTodo, editedValue, setEditedTodoValue } = this.props
-    const { label, ...otherState } = this.state
+    const { label } = this.state
+
+    const validationSchema = yup.object({
+      label: yup
+        .string()
+        .min(2, 'Minimum 3 symbols for describe todo')
+        .required('Please, fill what should you do')
+    })
 
     return (
       <Formik
-        initialValues={{ label: '' }}
-        onSubmit={({ label }) => {
+        initialValues={{ label }}
+        enableReinitialize
+        validationSchema={validationSchema}
+        onSubmit={({ label }, { resetForm }) => {
           if (!isEditedTodoEmpty(editedValue)) {
-            editTodo({ ...otherState, label })
+            editTodo({ ...editedValue, label })
             setEditedTodoValue({})
           } else {
             addTodo(label)
           }
-          this.setState({ label: '' })
+          resetForm({
+            values: {
+              label: ''
+            }
+          })
         }}
       >
-        {({ errors, touched }) => (
-          <Form className='todo__form'>
-            <input
-              className='todo__form-input'
-              placeholder='What needs to be done?'
-              name='label'
-              value={label}
-              onChange={({ target }) => {
-                this.setState({ label: target.value })
-              }}
-            />
-          </Form>
-        )}
+        {({ values, errors, touched, handleChange, handleBlur }) => {
+          return (
+            <Form className='todo__form'>
+              <input
+                className={`todo__form-input ${
+                  errors.label && touched.label ? 'todo__form-input--error' : ''
+                }`}
+                placeholder='What needs to be done?'
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.label}
+                name='label'
+              />
+            </Form>
+          )
+        }}
       </Formik>
     )
   }
