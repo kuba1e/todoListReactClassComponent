@@ -1,3 +1,5 @@
+@import '../../variables/variables';
+
 .todo__list-item {
   display: flex;
   justify-content: space-between;
@@ -10,6 +12,9 @@
     line-height: 1.2;
     margin: 0;
     padding: 15px;
+    @media screen and (max-width: $md) {
+      font-size: 18px;
+    }
     &--done {
       text-decoration: line-through;
       color: #d9d9d9;
@@ -18,12 +23,14 @@
 }
 
 .delete-btn {
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
   opacity: 0;
   font-size: 30px;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
+
   &::after {
     content: '×';
   }
