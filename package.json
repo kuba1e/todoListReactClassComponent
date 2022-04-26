@@ -6,7 +6,8 @@
   "browserslist": "> 0.25%, not dead",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server",
+    "start": "node server/server.js",
+    "serve": "webpack-dev-server",
     "build": "webpack --env=production"
   },
   "keywords": [],
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "express": "^4.18.0",
     "prettier": "^2.6.2",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
