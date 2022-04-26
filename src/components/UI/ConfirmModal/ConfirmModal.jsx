@@ -3,15 +3,11 @@ import './ConfirmModal.scss'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Button from '../Button'
-import Emitter from '../../../EventEmitter'
+// import Emitter from '../../../EventEmitter'
 
 class ModalOverlay extends Component {
-  onCloseHandler = (event) => {
-    Emitter.emit('MODAL_CLOSE_BTN')
-  }
-
   render() {
-    const { children, onConfirm, onDismiss } = this.props
+    const { children, onDismiss, onConfirm } = this.props
 
     return (
       <div
@@ -41,7 +37,7 @@ class ModalOverlay extends Component {
 
 export default class ConfirmModal extends Component {
   render() {
-    const { onConfirm, onDismiss, children } = this.props
+    const { onConfirm, children, onDismiss } = this.props
 
     return (
       <Fragment>
