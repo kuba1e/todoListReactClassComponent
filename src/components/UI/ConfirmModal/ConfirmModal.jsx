@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react'
-import './ConfirmModal.scss'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
+
+import './ConfirmModal.scss'
 import Button from '../Button'
-// import Emitter from '../../../EventEmitter'
 
 class ModalOverlay extends Component {
   render() {
@@ -17,9 +17,10 @@ class ModalOverlay extends Component {
             onDismiss()
           }
         }}
+        aria-hidden='true'
       >
         <div className='modal-overlay'>
-          <Button className='close-btn' onClick={onDismiss}></Button>
+          <Button className='close-btn' onClick={onDismiss} />
           <p className='modal-overlay__text'>{children}</p>
           <div className='modal-overlay__control'>
             <Button className='confirm-btn' onClick={onConfirm}>
@@ -40,14 +41,14 @@ export default class ConfirmModal extends Component {
     const { onConfirm, children, onDismiss } = this.props
 
     return (
-      <Fragment>
+      <>
         {ReactDOM.createPortal(
           <ModalOverlay onConfirm={onConfirm} onDismiss={onDismiss}>
             {children}
           </ModalOverlay>,
           document.getElementById('overlay-root')
         )}
-      </Fragment>
+      </>
     )
   }
 }

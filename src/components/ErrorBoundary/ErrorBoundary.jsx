@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import './ErrorBoundary.scss'
-import ErrorIndicator from '../ErrorIndicator'
 import PropTypes from 'prop-types'
 
+import './ErrorBoundary.scss'
+import ErrorIndicator from '../ErrorIndicator'
+
 export default class ErrorBoundary extends Component {
-  state = {
-    error: ''
+  constructor() {
+    super()
+    this.state = {
+      error: ''
+    }
   }
 
   componentDidCatch(error) {
@@ -13,11 +17,10 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
-    const content = this.state.error ? (
-      <ErrorIndicator error={this.state.error} />
-    ) : (
-      this.props.children
-    )
+    const { error } = this.state
+    const { children } = this.props
+
+    const content = error ? <ErrorIndicator error={error} /> : children
 
     return content
   }

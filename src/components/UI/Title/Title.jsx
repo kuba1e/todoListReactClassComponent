@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import './Title.scss'
 import PropTypes from 'prop-types'
+
+import './Title.scss'
 
 export default class Title extends Component {
   render() {

@@ -1,28 +1,35 @@
 import React, { Component, Fragment } from 'react'
-import './TodoList.scss'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
+
+import './TodoList.scss'
 import TodoListItem from '../TodoListItem'
 import ConfirmModal from '../UI/ConfirmModal'
 import emitter from '../../EventEmitter'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+
 import {
   addTodo,
   deleteTodo,
+  setEditedTodoValue,
   toggleDoneTodo,
   getTodosFromLocalStorage
 } from '../../store/actions'
 import { getFilteredTodosList } from '../../helpers'
 
 class TodoList extends Component {
-  state = {
-    isConfirmModalActive: false,
-    id: -1
+  constructor() {
+    super()
+    this.state = {
+      isConfirmModalActive: false,
+      id: -1
+    }
   }
 
   componentDidMount() {
     const todos = JSON.parse(localStorage.getItem('todos')) || []
-    this.props.getTodosFromLocalStorage(todos)
+    const { getTodosFromLocalStorage: getTodosFromLS } = this.props
+    getTodosFromLS(todos)
 
     emitter.on('MODAL_CLOSE_BTN', this.onCloseHandler)
     emitter.on('MODAL_SHOW_BTN', this.onShowBtnHandler)
@@ -30,8 +37,9 @@ class TodoList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.todos !== this.props.todos) {
-      localStorage.setItem('todos', JSON.stringify(this.props.todos))
+    const { todos } = this.props
+    if (prevProps.todos !== todos) {
+      localStorage.setItem('todos', JSON.stringify(todos))
     }
   }
 
@@ -50,7 +58,9 @@ class TodoList extends Component {
   }
 
   onDeleteTodoHandler = () => {
-    this.props.deleteTodo(this.state.id)
+    const { deleteTodo } = this.props
+    const { id } = this.state
+    deleteTodo(id)
   }
 
   onDismiss = () => {
@@ -63,7 +73,8 @@ class TodoList extends Component {
   }
 
   render() {
-    const { todos, filterValue, toggleDoneTodo } = this.props
+    const { todos, setEditedTodoValue, filterValue, toggleDoneTodo } =
+      this.props
     const { isConfirmModalActive } = this.state
     const todosForRendering = getFilteredTodosList(filterValue, todos)
 
@@ -74,7 +85,7 @@ class TodoList extends Component {
     ) : null
 
     return (
-      <Fragment>
+      <>
         {confirmodal}
         <ul className='todo__list'>
           {todosForRendering.map((todo) => {
@@ -83,11 +94,12 @@ class TodoList extends Component {
                 key={todo.id}
                 todo={todo}
                 onToggleDone={toggleDoneTodo}
+                onSetEditedTodoValue={setEditedTodoValue}
               />
             )
           })}
         </ul>
-      </Fragment>
+      </>
     )
   }
 }
@@ -97,6 +109,7 @@ TodoList.propTypes = {
   todos: PropTypes.array,
   filterValue: PropTypes.string,
   deleteTodo: PropTypes.func,
+  setEditedTodoValue: PropTypes.func,
   toggleDoneTodo: PropTypes.func
 }
 
@@ -106,7 +119,13 @@ const mapStateToProps = ({ todos, filterValue }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
-    { addTodo, deleteTodo, toggleDoneTodo, getTodosFromLocalStorage },
+    {
+      addTodo,
+      deleteTodo,
+      setEditedTodoValue,
+      toggleDoneTodo,
+      getTodosFromLocalStorage
+    },
     dispatch
   )
 }

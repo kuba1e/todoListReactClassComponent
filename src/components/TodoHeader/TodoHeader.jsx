@@ -1,21 +1,28 @@
 import React, { Component } from 'react'
-import './TodoHeader.scss'
-import PropTypes from 'prop-types'
-import Button from '../UI/Button'
-import TodoAddForm from '../TodoAddForm'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
+import './TodoHeader.scss'
+import Button from '../UI/Button'
+import TodoAddForm from '../TodoAddForm'
+
 import { toggleAllDoneTodo } from '../../store/actions'
 import { areAllCompleted } from '../../helpers'
 
 class TodoHeader extends Component {
-  state = {
-    isSelected: false
+  constructor() {
+    super()
+    this.state = {
+      isSelected: false
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.isSelected !== this.state.isSelected) {
-      this.props.toggleAllDoneTodo(this.state.isSelected)
+    const { isSelected } = this.state
+    const { toggleAllDoneTodo } = this.props
+    if (prevState.isSelected !== isSelected) {
+      toggleAllDoneTodo(isSelected)
     }
   }
 

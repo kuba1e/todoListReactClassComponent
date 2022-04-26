@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import './TodoFooter.scss'
 import PropTypes from 'prop-types'
-import Button from '../UI/Button'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import './TodoFooter.scss'
+import Button from '../UI/Button'
+
 import { clearCompleted, setFilterValue } from '../../store/actions'
 import { getCompletedQuantity, getTodoCount } from '../../helpers'
 

@@ -5,75 +5,27 @@ import {
   ACTION_TOGGLE_DONE_ALL_TO_DO,
   ACTION_CLEAR_COMPLETED_TO_DO,
   ACTION_SET_FILTER_VALUE,
-  ACTION_GET_TODOS_FROM_LOCAL_STORAGE
+  ACTION_GET_TODOS_FROM_LOCAL_STORAGE,
+  ACTION_SET_EDITED_TO_DO_VALUE,
+  ACTION_EDIT_TO_DO
 } from '../actions'
 
-const getTheBiggestId = (todos) => {
-  return (
-    [...todos]
-      .sort((prevTodo, nextTodo) => {
-        const subtractionResult = prevTodo - nextTodo
-        if (subtractionResult < 0) {
-          return -1
-        } else if (subtractionResult > 0) {
-          return 1
-        } else {
-          return 0
-        }
-      })
-      .at(-1).id + 1
-  )
-}
-
-const generateId = (todos) => {
-  if (!todos.length) {
-    return 1
-  } else {
-    return getTheBiggestId(todos)
-  }
-}
-
-const createTodo = (label, todos) => {
-  return {
-    id: generateId(todos),
-    label,
-    done: false
-  }
-}
-
-const deleteTodo = (id, todos) => {
-  return todos.filter((todo) => todo.id !== id)
-}
-
-const toggleDoneTodo = (id, todos) => {
-  return todos.map((todo) => {
-    if (todo.id === id) {
-      return {
-        ...todo,
-        done: !todo.done
-      }
-    } else {
-      return todo
-    }
-  })
-}
-
-const toggleAllDoneTodo = (status, todos) => {
-  return todos.map((todo) => {
-    return { ...todo, done: status }
-  })
-}
-
-const clearCompletedTodo = (todos) => {
-  return todos.filter((todo) => !todo.done)
-}
+import {
+  createTodo,
+  deleteTodo,
+  toggleDoneTodo,
+  toggleAllDoneTodo,
+  clearCompletedTodo,
+  editTodo
+} from '../../helpers'
 
 const initialState = {
   todos: [],
-  filterValue: 'all'
+  filterValue: 'all',
+  editedValue: {}
 }
 
-export const todoReducer = (state = initialState, { type, payload }) => {
+export const todoReducer = (state, { type, payload }) => {
   switch (type) {
     case ACTION_ADD_TO_DO:
       return {
@@ -110,7 +62,18 @@ export const todoReducer = (state = initialState, { type, payload }) => {
         ...state,
         todos: payload
       }
+    case ACTION_SET_EDITED_TO_DO_VALUE: {
+      return {
+        ...state,
+        editedValue: { ...payload }
+      }
+    }
+    case ACTION_EDIT_TO_DO:
+      return {
+        ...state,
+        todos: editTodo(payload, state.todos)
+      }
     default:
-      return state
+      return initialState
   }
 }

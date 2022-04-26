@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import './Checkbox.scss'
 import PropTypes from 'prop-types'
+
+import './Checkbox.scss'
 
 export default class Checkbox extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class Checkbox extends Component {
             type='checkbox'
             checked={checked}
           />
-          <div className={`checkbox__indicator ${className}`}></div>
+          <div className={`checkbox__indicator ${className}`} />
         </label>
       </div>
     )
