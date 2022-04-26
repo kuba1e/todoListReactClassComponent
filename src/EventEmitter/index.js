@@ -1,2 +1,2 @@
-import Emitter from './EventEmitter'
-export default Emitter
+import emitter from './EventEmitter'
+export default emitter

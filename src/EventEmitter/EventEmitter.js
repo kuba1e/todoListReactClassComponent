@@ -1,13 +1,13 @@
-import EventEmitter from 'eventemitter3'
+import EventEmitter from 'events'
 
 const EventEmitterInst = new EventEmitter()
 
-const Emitter = {
+const emitter = {
   on: (event, fn) => EventEmitterInst.on(event, fn),
   off: (event, fn) => EventEmitterInst.off(event, fn),
   emit: (event, payload) => EventEmitterInst.emit(event, payload)
 }
 
-Object.freeze(Emitter)
+Object.freeze(emitter)
 
-export default Emitter
+export default emitter

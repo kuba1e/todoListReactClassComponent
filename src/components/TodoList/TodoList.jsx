@@ -3,7 +3,7 @@ import './TodoList.scss'
 import PropTypes from 'prop-types'
 import TodoListItem from '../TodoListItem'
 import ConfirmModal from '../UI/ConfirmModal'
-import Emitter from '../../EventEmitter'
+import emitter from '../../EventEmitter'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -24,16 +24,9 @@ class TodoList extends Component {
     const todos = JSON.parse(localStorage.getItem('todos')) || []
     this.props.getTodosFromLocalStorage(todos)
 
-    Emitter.on('MODAL_CLOSE_BTN', () =>
-      this.setState({ isConfirmModalActive: false })
-    )
-    Emitter.on('MODAL_SHOW_BTN', (id) => {
-      this.setState({ id, isConfirmModalActive: true })
-    })
-
-    Emitter.on('MODAL_DELETE_TODO', () => {
-      this.props.deleteTodo(this.state.id)
-    })
+    emitter.on('MODAL_CLOSE_BTN', this.onCloseHandler)
+    emitter.on('MODAL_SHOW_BTN', this.onShowBtnHandler)
+    emitter.on('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
   }
 
   componentDidUpdate(prevProps) {
@@ -43,18 +36,30 @@ class TodoList extends Component {
   }
 
   componentWillUnmount() {
-    Emitter.off('MODAL_CLOSE_BTN')
-    Emitter.off('MODAL_SHOW_BTN')
-    Emitter.off('MODAL_DELETE_TODO')
+    emitter.off('MODAL_CLOSE_BTN', this.onCloseHandler)
+    emitter.off('MODAL_SHOW_BTN', this.onShowBtnHandler)
+    emitter.off('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
+  }
+
+  onCloseHandler = () => {
+    this.setState({ isConfirmModalActive: false })
+  }
+
+  onShowBtnHandler = (id) => {
+    this.setState({ id, isConfirmModalActive: true })
+  }
+
+  onDeleteTodoHandler = () => {
+    this.props.deleteTodo(this.state.id)
   }
 
   onDismiss = () => {
-    Emitter.emit('MODAL_CLOSE_BTN')
+    emitter.emit('MODAL_CLOSE_BTN')
   }
 
   onConfirm = () => {
-    Emitter.emit('MODAL_DELETE_TODO')
-    Emitter.emit('MODAL_CLOSE_BTN')
+    emitter.emit('MODAL_DELETE_TODO')
+    emitter.emit('MODAL_CLOSE_BTN')
   }
 
   render() {
