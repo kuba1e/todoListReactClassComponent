@@ -4,11 +4,21 @@ import PropTypes from 'prop-types'
 import Checkbox from '../UI/Checkbox'
 import Button from '../UI/Button'
 import ConfirmModal from '../UI/ConfirmModal'
-
+import Emitter from '../../EventEmitter'
 export default class TodoListItem extends Component {
   state = {
     isButtonActive: false,
     isConfirmModalActive: false
+  }
+
+  componentDidMount() {
+    Emitter.on('MODAL_CLOSE_BTN', () =>
+      this.setState({ isConfirmModalActive: false })
+    )
+  }
+
+  componentWillUnmount() {
+    Emitter.off('MODAL_CLOSE_BTN')
   }
 
   onHideModal = () => {

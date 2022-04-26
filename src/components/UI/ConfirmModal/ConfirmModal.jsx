@@ -3,10 +3,16 @@ import './ConfirmModal.scss'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Button from '../Button'
+import Emitter from '../../../EventEmitter'
 
 class ModalOverlay extends Component {
+  onCloseHandler = (event) => {
+    Emitter.emit('MODAL_CLOSE_BTN')
+  }
+
   render() {
     const { children, onConfirm, onDismiss } = this.props
+
     return (
       <div
         className='backdrop'
