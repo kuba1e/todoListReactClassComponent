@@ -14,7 +14,7 @@ import { getFilteredTodosList } from '../../helpers'
 
 class TodoList extends Component {
   componentDidMount() {
-    const todos = JSON.parse(localStorage.getItem('todos'))
+    const todos = JSON.parse(localStorage.getItem('todos')) || []
     this.props.getTodosFromLocalStorage(todos)
   }
 
