@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './ErrorBoundary.scss'
 import ErrorIndicator from '../ErrorIndicator'
 import PropTypes from 'prop-types'
 
