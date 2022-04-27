@@ -5,7 +5,7 @@ import './TodoListItem.scss'
 
 import Button from '../UI/Button'
 import Checkbox from '../UI/Checkbox'
-import Emitter from '../../EventEmitter'
+import emitter from '../../EventEmitter'
 
 export default class TodoListItem extends Component {
   constructor() {
@@ -19,7 +19,7 @@ export default class TodoListItem extends Component {
     const {
       todo: { id }
     } = this.props
-    Emitter.emit('MODAL_SHOW_BTN', id)
+    emitter.emit('MODAL_SHOW_BTN', id)
   }
 
   render() {

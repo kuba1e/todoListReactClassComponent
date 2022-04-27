@@ -32,9 +32,9 @@ class TodoList extends Component {
     const { getTodosFromLocalStorage: getTodosFromLS } = this.props
     getTodosFromLS(todos)
 
-    emitter.on('MODAL_CLOSE_BTN', this.onCloseHandler)
-    emitter.on('MODAL_SHOW_BTN', this.onShowBtnHandler)
-    emitter.on('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
+    emitter.subscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
+    emitter.subscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
+    emitter.subscribe('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
   }
 
   componentDidUpdate(prevProps) {
@@ -45,9 +45,9 @@ class TodoList extends Component {
   }
 
   componentWillUnmount() {
-    emitter.off('MODAL_CLOSE_BTN', this.onCloseHandler)
-    emitter.off('MODAL_SHOW_BTN', this.onShowBtnHandler)
-    emitter.off('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
+    emitter.deleteSubscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
+    emitter.deleteSubscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
+    emitter.deleteSubscribe('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
   }
 
   onCloseHandler = () => {
