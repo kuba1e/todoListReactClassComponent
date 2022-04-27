@@ -8,10 +8,11 @@ import Checkbox from '../UI/Checkbox'
 import emitter from '../../EventEmitter'
 
 export default class TodoListItem extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      isButtonActive: false
+      isButtonActive: false,
+      inputValue: this.props.todo.label
     }
   }
 
@@ -22,40 +23,80 @@ export default class TodoListItem extends Component {
     emitter.emit('MODAL_SHOW_BTN', id)
   }
 
+  onSubmit = (event) => {
+    event.preventDefault()
+    const { todo, onEditTodo } = this.props
+    const { inputValue } = this.state
+
+    if (inputValue) {
+      onEditTodo({ ...todo, label: inputValue })
+    } else {
+      this.setState({ inputValue: todo.label })
+    }
+    emitter.emit('SET_EDITED_TODO_ACTIVE', -1)
+  }
+
   render() {
-    const { todo, onToggleDone, onSetEditedTodoValue } = this.props
+    const { todo, onToggleDone, editedTodo } = this.props
     const { label, id, done } = todo
 
-    const { isButtonActive } = this.state
+    const { isButtonActive, inputValue } = this.state
+
+    const isInputActive = editedTodo === id
+
+    const todoLabel = (
+      <p
+        className={`todo__list-item-text ${
+          done ? 'todo__list-item-text--done' : ''
+        }`}
+      >
+        {label}
+      </p>
+    )
+
+    const todoEditInput = (
+      <form
+        className='todo__list-item-edit-form'
+        onSubmit={this.onSubmit}
+        onBlur={this.onSubmit}
+      >
+        <input
+          className='todo__list-item-edit-input'
+          autoFocus
+          value={inputValue}
+          onChange={({ target: { value } }) =>
+            this.setState({ inputValue: value })
+          }
+        />
+      </form>
+    )
+
+    const todoBody = isInputActive ? todoEditInput : todoLabel
 
     return (
       <li
         className='todo__list-item'
         onMouseEnter={() => this.setState({ isButtonActive: true })}
         onMouseLeave={() => this.setState({ isButtonActive: false })}
+        onDoubleClick={(event) => {
+          event.preventDefault()
+          emitter.emit('SET_EDITED_TODO_ACTIVE', id)
+        }}
       >
         <Checkbox
-          className={done ? 'done' : ''}
+          className={isInputActive ? 'checkbox--hide' : ''}
           onChange={() => onToggleDone(id)}
           checked={done}
         />
-        <p
-          className={`todo__list-item-text ${
-            done ? 'todo__list-item-text--done' : ''
+        {todoBody}
+        <div
+          className={`btns-container ${
+            isInputActive ? 'btns-container--hide' : ''
           }`}
         >
-          {label}
-        </p>
-        <div className='btns-container'>
           <Button
             className={`edit-btn ${isButtonActive ? 'edit-btn--active' : ''}`}
-            onClick={() => {
-              window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-              })
-              onSetEditedTodoValue(todo)
-            }}
+            onClick={() => emitter.emit('SET_EDITED_TODO_ACTIVE', id)}
           />
           <Button
             className={`delete-btn ${
@@ -72,5 +113,6 @@ export default class TodoListItem extends Component {
 TodoListItem.propTypes = {
   todo: PropTypes.object,
   onToggleDone: PropTypes.func,
-  onSetEditedTodoValue: PropTypes.func
+  onEditTodo: PropTypes.func,
+  editedTodo: PropTypes.number
 }

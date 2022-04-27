@@ -3,13 +3,9 @@ class EventEmitter {
     this.events = {}
   }
 
-  addSubscribe = (name) => {
-    this.events[name] = []
-  }
-
   subscribe = (name, listenerFunc) => {
     if (!this.events[name]) {
-      this.addSubscribe(name)
+      this.events[name] = []
     }
     this.events[name].push(listenerFunc)
   }
@@ -20,8 +16,8 @@ class EventEmitter {
     )
   }
 
-  emit = (name, data) => {
-    const listener = (callback) => [callback(data)]
+  emit = (name, ...data) => {
+    const listener = (callback) => callback(...data)
     this.events[name].forEach(listener)
   }
 }

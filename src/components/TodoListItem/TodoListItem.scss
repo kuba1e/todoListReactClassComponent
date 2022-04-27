@@ -4,12 +4,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0;
   border-bottom: 1px solid #ededed;
   min-height: 60px;
+  font-size: 24px;
+  @media screen and (max-width: $md) {
+    font-size: 18px;
+  }
+
+  &-edit-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 15px;
+    border: none;
+    outline: none;
+    box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &-edit-form {
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    outline: 1px solid #999;
+  }
+
   &-text {
     word-break: break-all;
     flex-grow: 1;
-    font-size: 24px;
     line-height: 1.2;
     margin: 0;
     padding: 15px;
@@ -30,6 +54,10 @@
   justify-content: space-between;
   align-items: center;
   width: 80px;
+  &--hide {
+    display: none;
+  }
+
   @media screen and (max-width: $md) {
     justify-content: center;
   }

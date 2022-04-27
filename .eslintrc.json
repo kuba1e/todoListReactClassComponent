@@ -37,6 +37,8 @@
     "max-classes-per-file": "off",
     "click-events-have-key-events": "off",
     "import/prefer-default-export": "off",
-    "jsx-a11y/label-has-associated-control": "off"
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/destructuring-assignment": "off",
+    "jsx-a11y/no-autofocus": "off"
   }
 }

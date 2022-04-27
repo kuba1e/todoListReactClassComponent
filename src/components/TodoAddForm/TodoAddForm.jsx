@@ -7,19 +7,27 @@ import * as yup from 'yup'
 
 import './TodoAddForm.scss'
 
-import { addTodo, editTodo, setEditedTodoValue } from '../../store/actions'
-import { isEditedTodoEmpty } from '../../helpers'
+import { addTodo } from '../../store/actions'
 
 class TodoAddForm extends Component {
-  render() {
-    const { addTodo, editTodo, editedValue, setEditedTodoValue } = this.props
-
-    const validationSchema = yup.object({
-      label: yup.string().required('Please, fill what should you do')
+  onSubmitHandler = ({ label }, { resetForm }) => {
+    const { addTodo } = this.props
+    if (label) {
+      addTodo(label)
+    }
+    resetForm({
+      values: {
+        label: ''
+      }
     })
-    const initialValues = isEditedTodoEmpty(editedValue)
-      ? { label: '' }
-      : { label: editedValue.label }
+  }
+
+  render() {
+    const validationSchema = yup.object({
+      label: yup.string().min(3, 'Please, write more about todo')
+    })
+
+    const initialValues = { label: '' }
 
     return (
       <Formik
@@ -27,22 +35,18 @@ class TodoAddForm extends Component {
         enableReinitialize
         validateOnBlur={false}
         validationSchema={validationSchema}
-        onSubmit={({ label }, { resetForm }) => {
-          if (!isEditedTodoEmpty(editedValue)) {
-            editTodo({ ...editedValue, label })
-            setEditedTodoValue({})
-          } else {
-            addTodo(label)
-          }
-          resetForm({
-            values: {
-              label: ''
-            }
-          })
-        }}
+        onSubmit={this.onSubmitHandler}
       >
-        {({ values, errors, touched, handleChange, handleBlur }) => {
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          submitForm
+        }) => {
           const isChanged = errors.label && touched.label
+
           return (
             <Form className='todo__form'>
               <input
@@ -51,7 +55,10 @@ class TodoAddForm extends Component {
                 }`}
                 placeholder='What needs to be done?'
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(event) => {
+                  handleBlur(event)
+                  submitForm()
+                }}
                 value={values.label}
                 name='label'
               />
@@ -67,10 +74,7 @@ class TodoAddForm extends Component {
 }
 
 TodoAddForm.propTypes = {
-  addTodo: PropTypes.func,
-  editTodo: PropTypes.func,
-  editedValue: PropTypes.object,
-  setEditedTodoValue: PropTypes.func
+  addTodo: PropTypes.func
 }
 
 const mapStateToProps = ({ editedValue }) => {
@@ -80,7 +84,7 @@ const mapStateToProps = ({ editedValue }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ addTodo, editTodo, setEditedTodoValue }, dispatch)
+  return bindActionCreators({ addTodo }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoAddForm)

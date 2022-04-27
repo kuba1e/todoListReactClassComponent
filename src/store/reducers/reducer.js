@@ -6,7 +6,6 @@ import {
   ACTION_CLEAR_COMPLETED_TO_DO,
   ACTION_SET_FILTER_VALUE,
   ACTION_GET_TODOS_FROM_LOCAL_STORAGE,
-  ACTION_SET_EDITED_TO_DO_VALUE,
   ACTION_EDIT_TO_DO
 } from '../actions'
 
@@ -22,7 +21,7 @@ import {
 const initialState = {
   todos: [],
   filterValue: 'all',
-  editedValue: {}
+  editedValue: -1
 }
 
 export const todoReducer = (state, { type, payload }) => {
@@ -62,12 +61,6 @@ export const todoReducer = (state, { type, payload }) => {
         ...state,
         todos: payload
       }
-    case ACTION_SET_EDITED_TO_DO_VALUE: {
-      return {
-        ...state,
-        editedValue: { ...payload }
-      }
-    }
     case ACTION_EDIT_TO_DO:
       return {
         ...state,

@@ -7,7 +7,7 @@ export default class Checkbox extends Component {
   render() {
     const { className = '', onChange, checked, children } = this.props
     return (
-      <div className='checkbox'>
+      <div className={`checkbox ${className}`}>
         <label className='checkbox__label'>
           {children}
           <input
@@ -16,7 +16,7 @@ export default class Checkbox extends Component {
             type='checkbox'
             checked={checked}
           />
-          <div className={`checkbox__indicator ${className}`} />
+          <div className='checkbox__indicator' />
         </label>
       </div>
     )

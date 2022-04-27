@@ -12,7 +12,7 @@ import TodoListItem from '../TodoListItem'
 import {
   addTodo,
   deleteTodo,
-  setEditedTodoValue,
+  editTodo,
   toggleDoneTodo,
   getTodosFromLocalStorage
 } from '../../store/actions'
@@ -23,6 +23,7 @@ class TodoList extends Component {
     super()
     this.state = {
       isConfirmModalActive: false,
+      editedTodoActive: -1,
       id: -1
     }
   }
@@ -35,6 +36,7 @@ class TodoList extends Component {
     emitter.subscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
     emitter.subscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
     emitter.subscribe('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
+    emitter.subscribe('SET_EDITED_TODO_ACTIVE', this.onEditedTodoActive)
   }
 
   componentDidUpdate(prevProps) {
@@ -48,6 +50,7 @@ class TodoList extends Component {
     emitter.deleteSubscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
     emitter.deleteSubscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
     emitter.deleteSubscribe('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
+    emitter.deleteSubscribe('SET_EDITED_TODO_ACTIVE', this.onEditedTodoActive)
   }
 
   onCloseHandler = () => {
@@ -64,6 +67,10 @@ class TodoList extends Component {
     deleteTodo(id)
   }
 
+  onEditedTodoActive = (editedTodoActive) => {
+    this.setState({ editedTodoActive })
+  }
+
   onDismiss = () => {
     emitter.emit('MODAL_CLOSE_BTN')
   }
@@ -74,9 +81,9 @@ class TodoList extends Component {
   }
 
   render() {
-    const { todos, setEditedTodoValue, filterValue, toggleDoneTodo } =
+    const { todos, setEditedTodoValue, filterValue, toggleDoneTodo, editTodo } =
       this.props
-    const { isConfirmModalActive } = this.state
+    const { isConfirmModalActive, editedTodoActive } = this.state
     const todosForRendering = getFilteredTodosList(filterValue, todos)
 
     const confirmodal = isConfirmModalActive ? (
@@ -96,6 +103,8 @@ class TodoList extends Component {
                 todo={todo}
                 onToggleDone={toggleDoneTodo}
                 onSetEditedTodoValue={setEditedTodoValue}
+                onEditTodo={editTodo}
+                editedTodo={editedTodoActive}
               />
             )
           })}
@@ -109,13 +118,14 @@ TodoList.propTypes = {
   getTodosFromLocalStorage: PropTypes.func,
   todos: PropTypes.array,
   filterValue: PropTypes.string,
+  editTodo: PropTypes.func,
   deleteTodo: PropTypes.func,
   setEditedTodoValue: PropTypes.func,
   toggleDoneTodo: PropTypes.func
 }
 
-const mapStateToProps = ({ todos, filterValue }) => {
-  return { todos, filterValue }
+const mapStateToProps = ({ todos, filterValue, editedValue }) => {
+  return { todos, filterValue, editedValue }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -123,7 +133,7 @@ const mapDispatchToProps = (dispatch) => {
     {
       addTodo,
       deleteTodo,
-      setEditedTodoValue,
+      editTodo,
       toggleDoneTodo,
       getTodosFromLocalStorage
     },

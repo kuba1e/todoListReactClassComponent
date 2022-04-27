@@ -10,6 +10,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  &--hide {
+    visibility: hidden;
+  }
+
   @media screen and (max-width: $md) {
     width: 30px;
     height: 30px;

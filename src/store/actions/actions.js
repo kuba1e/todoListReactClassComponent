@@ -32,11 +32,5 @@ export const getTodosFromLocalStorage = (todos) => ({
   payload: todos
 })
 
-export const ACTION_SET_EDITED_TO_DO_VALUE = 'ACTION_SET_EDITED_TO_DO_VALUE'
-export const setEditedTodoValue = (todo) => ({
-  type: ACTION_SET_EDITED_TO_DO_VALUE,
-  payload: todo
-})
-
 export const ACTION_EDIT_TO_DO = 'ACTION_EDIT_TO_DO'
 export const editTodo = (todo) => ({ type: ACTION_EDIT_TO_DO, payload: todo })
