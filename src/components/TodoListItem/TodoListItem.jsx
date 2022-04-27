@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import './TodoListItem.scss'
 
-import Checkbox from '../UI/Checkbox'
 import Button from '../UI/Button'
+import Checkbox from '../UI/Checkbox'
 import Emitter from '../../EventEmitter'
 
 export default class TodoListItem extends Component {

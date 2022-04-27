@@ -11,36 +11,21 @@ import { addTodo, editTodo, setEditedTodoValue } from '../../store/actions'
 import { isEditedTodoEmpty } from '../../helpers'
 
 class TodoAddForm extends Component {
-  constructor() {
-    super()
-    this.state = {
-      label: ''
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { editedValue } = this.props
-    if (prevProps.editedValue !== editedValue) {
-      const { label } = editedValue
-      this.setState({ label })
-    }
-  }
-
   render() {
     const { addTodo, editTodo, editedValue, setEditedTodoValue } = this.props
-    const { label } = this.state
 
     const validationSchema = yup.object({
-      label: yup
-        .string()
-        .min(2, 'Minimum 3 symbols for describe todo')
-        .required('Please, fill what should you do')
+      label: yup.string().required('Please, fill what should you do')
     })
+    const initialValues = isEditedTodoEmpty(editedValue)
+      ? { label: '' }
+      : { label: editedValue.label }
 
     return (
       <Formik
-        initialValues={{ label }}
+        initialValues={initialValues}
         enableReinitialize
+        validateOnBlur={false}
         validationSchema={validationSchema}
         onSubmit={({ label }, { resetForm }) => {
           if (!isEditedTodoEmpty(editedValue)) {
@@ -57,11 +42,12 @@ class TodoAddForm extends Component {
         }}
       >
         {({ values, errors, touched, handleChange, handleBlur }) => {
+          const isChanged = errors.label && touched.label
           return (
             <Form className='todo__form'>
               <input
                 className={`todo__form-input ${
-                  errors.label && touched.label ? 'todo__form-input--error' : ''
+                  isChanged ? 'todo__form-input--error' : ''
                 }`}
                 placeholder='What needs to be done?'
                 onChange={handleChange}
@@ -69,6 +55,9 @@ class TodoAddForm extends Component {
                 value={values.label}
                 name='label'
               />
+              <p className='todo__form-error-message'>
+                {isChanged ? errors.label : ''}
+              </p>
             </Form>
           )
         }}

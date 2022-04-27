@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './ErrorBoundary.scss'
+
 import ErrorIndicator from '../ErrorIndicator'
 
 export default class ErrorBoundary extends Component {

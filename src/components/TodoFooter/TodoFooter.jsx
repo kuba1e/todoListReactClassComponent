@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import './TodoFooter.scss'
+
 import Button from '../UI/Button'
 
 import { clearCompleted, setFilterValue } from '../../store/actions'

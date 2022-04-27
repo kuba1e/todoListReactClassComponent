@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 
 import './TodoList.scss'
-import TodoListItem from '../TodoListItem'
+
 import ConfirmModal from '../UI/ConfirmModal'
 import emitter from '../../EventEmitter'
+import TodoListItem from '../TodoListItem'
 
 import {
   addTodo,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 
 import './ConfirmModal.scss'
+
 import Button from '../Button'
 
 class ModalOverlay extends Component {

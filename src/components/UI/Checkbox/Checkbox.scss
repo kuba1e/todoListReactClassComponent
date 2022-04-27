@@ -1,3 +1,5 @@
+@import '../../../scssStyles/variables';
+
 .checkbox {
   display: block;
   position: relative;
@@ -8,6 +10,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  @media screen and (max-width: $md) {
+    width: 30px;
+    height: 30px;
+  }
   &__input {
     position: absolute;
     opacity: 0;
@@ -22,6 +28,10 @@
     height: 40px;
     width: 40px;
     cursor: pointer;
+    @media screen and (max-width: $md) {
+      width: 30px;
+      height: 30px;
+    }
   }
 }
 

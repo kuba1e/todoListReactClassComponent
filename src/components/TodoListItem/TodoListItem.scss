@@ -30,17 +30,24 @@
   justify-content: space-between;
   align-items: center;
   width: 80px;
+  @media screen and (max-width: $md) {
+    justify-content: center;
+  }
 }
 
 .delete-btn {
   width: 40px;
   height: 40px;
+  padding: 0;
   opacity: 0;
   font-size: 30px;
   color: #cc9a9a;
   transition: color 0.2s ease-out;
   @media screen and (max-width: $md) {
     opacity: 1;
+    width: 30px;
+    height: 30px;
+    font-size: 28px;
   }
   &::after {
     content: '×';
@@ -63,10 +70,14 @@
   background-image: url('../../assets/icons/edit.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-  fill: #cc9a9a;
+  background-size: 15px;
+  &:hover {
+    background-image: url('../../assets/icons/edit-hover.svg');
+  }
   @media screen and (max-width: $md) {
     opacity: 1;
+    width: 30px;
+    height: 30px;
   }
 
   &--active {
