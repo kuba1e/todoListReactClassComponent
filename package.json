@@ -6,7 +6,7 @@
   "browserslist": "> 0.25%, not dead",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
+    "start": "node ./server/server.js",
     "serve": "webpack-dev-server",
     "build": "webpack --env=production"
   },
