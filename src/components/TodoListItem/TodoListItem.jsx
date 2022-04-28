@@ -32,8 +32,17 @@ export default class TodoListItem extends Component {
       onEditTodo({ ...todo, label: inputValue })
     } else {
       this.setState({ inputValue: todo.label })
+      this.onShowModal()
     }
     emitter.emit('SET_EDITED_TODO_ACTIVE', -1)
+  }
+
+  onInputChange = ({ target: { value } }) =>
+    this.setState({ inputValue: value })
+
+  onDoubleClick = () => {
+    const { id } = this.props.todo
+    emitter.emit('SET_EDITED_TODO_ACTIVE', id)
   }
 
   render() {
@@ -64,9 +73,7 @@ export default class TodoListItem extends Component {
           className='todo__list-item-edit-input'
           autoFocus
           value={inputValue}
-          onChange={({ target: { value } }) =>
-            this.setState({ inputValue: value })
-          }
+          onChange={this.onInputChange}
         />
       </form>
     )
@@ -78,10 +85,7 @@ export default class TodoListItem extends Component {
         className='todo__list-item'
         onMouseEnter={() => this.setState({ isButtonActive: true })}
         onMouseLeave={() => this.setState({ isButtonActive: false })}
-        onDoubleClick={(event) => {
-          event.preventDefault()
-          emitter.emit('SET_EDITED_TODO_ACTIVE', id)
-        }}
+        onDoubleClick={this.onDoubleClick}
       >
         <Checkbox
           className={isInputActive ? 'checkbox--hide' : ''}
