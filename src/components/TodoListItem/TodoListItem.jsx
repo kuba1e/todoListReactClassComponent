@@ -17,9 +17,7 @@ export default class TodoListItem extends Component {
   }
 
   onShowModal = () => {
-    const {
-      todo: { id }
-    } = this.props
+    const { id } = this.props.todo
     emitter.emit('MODAL_SHOW_BTN', id)
   }
 
@@ -46,8 +44,11 @@ export default class TodoListItem extends Component {
   }
 
   render() {
-    const { todo, onToggleDone, editedTodo } = this.props
-    const { label, id, done } = todo
+    const {
+      todo: { id, done },
+      onToggleDone,
+      editedTodo
+    } = this.props
 
     const { isButtonActive, inputValue } = this.state
 
@@ -59,7 +60,7 @@ export default class TodoListItem extends Component {
           done ? 'todo__list-item-text--done' : ''
         }`}
       >
-        {label}
+        {inputValue}
       </p>
     )
 
