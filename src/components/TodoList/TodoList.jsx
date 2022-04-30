@@ -8,15 +8,17 @@ import './TodoList.scss'
 import ConfirmModal from '../UI/ConfirmModal'
 import emitter from '../../EventEmitter'
 import TodoListItem from '../TodoListItem'
+import Loader from '../Lader'
 
 import {
   addTodo,
   deleteTodo,
   editTodo,
-  toggleDoneTodo,
-  getTodosFromLocalStorage
+  toggleDoneTodo
 } from '../../store/actions'
 import { getFilteredTodosList } from '../../helpers'
+import withTodosApi from '../hocHelpers'
+import { fetchTodos } from '../../store/asyncFoo'
 
 class TodoList extends Component {
   constructor() {
@@ -29,9 +31,8 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    const todos = JSON.parse(localStorage.getItem('todos')) || []
-    const { getTodosFromLocalStorage: getTodosFromLS } = this.props
-    getTodosFromLS(todos)
+    const { getTodos } = this.props
+    getTodos()
 
     emitter.subscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
     emitter.subscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
@@ -81,8 +82,14 @@ class TodoList extends Component {
   }
 
   render() {
-    const { todos, setEditedTodoValue, filterValue, toggleDoneTodo, editTodo } =
-      this.props
+    const {
+      todos,
+      setEditedTodoValue,
+      filterValue,
+      toggleDoneTodo,
+      editTodo,
+      loading
+    } = this.props
     const { isConfirmModalActive, editedTodoActive } = this.state
     const todosForRendering = getFilteredTodosList(filterValue, todos)
 
@@ -92,11 +99,9 @@ class TodoList extends Component {
       </ConfirmModal>
     ) : null
 
-    return (
-      <>
-        {confirmodal}
-        <ul className='todo__list'>
-          {todosForRendering.map((todo) => {
+    const todoElements =
+      loading === 'succeded'
+        ? todosForRendering.map((todo) => {
             return (
               <TodoListItem
                 key={todo.id}
@@ -107,7 +112,21 @@ class TodoList extends Component {
                 editedTodo={editedTodoActive}
               />
             )
-          })}
+          })
+        : null
+
+    const loader = loading === 'pending' ? <Loader /> : null
+
+    return (
+      <>
+        {confirmodal}
+        <ul
+          className={`todo__list ${
+            loading === 'pending' ? 'todo__list--pending' : ''
+          }`}
+        >
+          {loader}
+          {todoElements}
         </ul>
       </>
     )
@@ -115,8 +134,9 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  getTodosFromLocalStorage: PropTypes.func,
+  getTodos: PropTypes.func,
   todos: PropTypes.array,
+  loading: PropTypes.string,
   filterValue: PropTypes.string,
   editTodo: PropTypes.func,
   deleteTodo: PropTypes.func,
@@ -124,21 +144,23 @@ TodoList.propTypes = {
   toggleDoneTodo: PropTypes.func
 }
 
-const mapStateToProps = ({ todos, filterValue, editedValue }) => {
-  return { todos, filterValue, editedValue }
+const mapStateToProps = ({ todos, filterValue, loading }) => {
+  return { todos, filterValue, loading }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { todosApi }) => {
   return bindActionCreators(
     {
       addTodo,
       deleteTodo,
       editTodo,
       toggleDoneTodo,
-      getTodosFromLocalStorage
+      getTodos: fetchTodos(todosApi)
     },
     dispatch
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default withTodosApi(
+  connect(mapStateToProps, mapDispatchToProps)(TodoList)
+)

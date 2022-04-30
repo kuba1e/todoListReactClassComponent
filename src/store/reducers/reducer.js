@@ -5,8 +5,10 @@ import {
   ACTION_TOGGLE_DONE_ALL_TO_DO,
   ACTION_CLEAR_COMPLETED_TO_DO,
   ACTION_SET_FILTER_VALUE,
-  ACTION_GET_TODOS_FROM_LOCAL_STORAGE,
-  ACTION_EDIT_TO_DO
+  ACTION_GET_TODOS,
+  ACTION_EDIT_TO_DO,
+  ACTION_REQUESTED_TO_GET_TODOS,
+  ACTION_FAILED_TO_FETCH
 } from '../actions'
 
 import {
@@ -21,7 +23,8 @@ import {
 const initialState = {
   todos: [],
   filterValue: 'all',
-  editedValue: -1
+  loading: 'idle',
+  error: null
 }
 
 export const todoReducer = (state, { type, payload }) => {
@@ -56,11 +59,25 @@ export const todoReducer = (state, { type, payload }) => {
         ...state,
         filterValue: payload
       }
-    case ACTION_GET_TODOS_FROM_LOCAL_STORAGE:
+    case ACTION_GET_TODOS:
       return {
         ...state,
+        loading: 'succeded',
         todos: payload
       }
+    case ACTION_REQUESTED_TO_GET_TODOS:
+      return {
+        ...state,
+        error: null,
+        loading: 'pending'
+      }
+    case ACTION_FAILED_TO_FETCH:
+      return {
+        ...state,
+        loading: 'failed',
+        error: payload
+      }
+
     case ACTION_EDIT_TO_DO:
       return {
         ...state,

@@ -8,10 +8,13 @@ import TodoHeader from '../TodoHeader'
 import TodoList from '../TodoList'
 import TodoFooter from '../TodoFooter'
 
+import { TodosApiProvider } from '../todosApiContext'
+import todosApi from '../../services/apiService'
+
 export default class App extends Component {
   render() {
     return (
-      <>
+      <TodosApiProvider value={todosApi}>
         <Title>todos</Title>
         <ErrorBoundary>
           <div className='todo'>
@@ -20,7 +23,7 @@ export default class App extends Component {
             <TodoFooter />
           </div>
         </ErrorBoundary>
-      </>
+      </TodosApiProvider>
     )
   }
 }

@@ -25,12 +25,22 @@ export const setFilterValue = (value) => ({
   payload: value
 })
 
-export const ACTION_GET_TODOS_FROM_LOCAL_STORAGE =
-  'ACTION_GET_TODOS_FROM_LOCAL_STORAGE'
-export const getTodosFromLocalStorage = (todos) => ({
-  type: ACTION_GET_TODOS_FROM_LOCAL_STORAGE,
+export const ACTION_EDIT_TO_DO = 'ACTION_EDIT_TO_DO'
+export const editTodo = (todo) => ({ type: ACTION_EDIT_TO_DO, payload: todo })
+
+export const ACTION_GET_TODOS = 'ACTION_GET_TODOS'
+export const getTodos = (todos) => ({
+  type: ACTION_GET_TODOS,
   payload: todos
 })
 
-export const ACTION_EDIT_TO_DO = 'ACTION_EDIT_TO_DO'
-export const editTodo = (todo) => ({ type: ACTION_EDIT_TO_DO, payload: todo })
+export const ACTION_REQUESTED_TO_FETCH = 'ACTION_REQUESTED_TO_FETCH'
+export const requestedToFetch = () => ({
+  type: ACTION_REQUESTED_TO_FETCH
+})
+
+export const ACTION_FAILED_TO_FETCH = 'ACTION_FAILED_TO_FETCH'
+export const failedToFetch = (error) => ({
+  type: ACTION_FAILED_TO_FETCH,
+  payload: error
+})
