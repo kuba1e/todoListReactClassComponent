@@ -10,15 +10,14 @@ import emitter from '../../EventEmitter'
 import TodoListItem from '../TodoListItem'
 import Loader from '../Lader'
 
-import {
-  addTodo,
-  deleteTodo,
-  editTodo,
-  toggleDoneTodo
-} from '../../store/actions'
+import { deleteTodo, toggleDoneTodo } from '../../store/actions'
 import { getFilteredTodosList } from '../../helpers'
 import withTodosApi from '../hocHelpers'
-import { fetchTodos } from '../../store/asyncFoo'
+import {
+  fetchTodos,
+  sentToUpdateTodo,
+  sendToDeleteTodo
+} from '../../store/asyncFoo'
 
 class TodoList extends Component {
   constructor() {
@@ -151,9 +150,8 @@ const mapStateToProps = ({ todos, filterValue, loading }) => {
 const mapDispatchToProps = (dispatch, { todosApi }) => {
   return bindActionCreators(
     {
-      addTodo,
-      deleteTodo,
-      editTodo,
+      deleteTodo: sendToDeleteTodo(todosApi),
+      editTodo: sentToUpdateTodo(todosApi),
       toggleDoneTodo,
       getTodos: fetchTodos(todosApi)
     },

@@ -7,12 +7,11 @@ import {
   ACTION_SET_FILTER_VALUE,
   ACTION_GET_TODOS,
   ACTION_EDIT_TO_DO,
-  ACTION_REQUESTED_TO_GET_TODOS,
+  ACTION_REQUESTED_TO_FETCH,
   ACTION_FAILED_TO_FETCH
 } from '../actions'
 
 import {
-  createTodo,
   deleteTodo,
   toggleDoneTodo,
   toggleAllDoneTodo,
@@ -32,7 +31,7 @@ export const todoReducer = (state, { type, payload }) => {
     case ACTION_ADD_TO_DO:
       return {
         ...state,
-        todos: [...state.todos, createTodo(payload, state.todos)]
+        todos: [...state.todos, payload]
       }
     case ACTION_DELETE_TO_DO:
       return {
@@ -65,7 +64,7 @@ export const todoReducer = (state, { type, payload }) => {
         loading: 'succeded',
         todos: payload
       }
-    case ACTION_REQUESTED_TO_GET_TODOS:
+    case ACTION_REQUESTED_TO_FETCH:
       return {
         ...state,
         error: null,

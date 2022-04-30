@@ -7,7 +7,8 @@ import * as yup from 'yup'
 
 import './TodoAddForm.scss'
 
-import { addTodo } from '../../store/actions'
+import { sendToAddTodo } from '../../store/asyncFoo'
+import withTodosApi from '../hocHelpers'
 
 class TodoAddForm extends Component {
   onSubmitHandler = ({ label }, { resetForm }) => {
@@ -83,8 +84,10 @@ const mapStateToProps = ({ editedValue }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ addTodo }, dispatch)
+const mapDispatchToProps = (dispatch, { todosApi }) => {
+  return bindActionCreators({ addTodo: sendToAddTodo(todosApi) }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoAddForm)
+export default withTodosApi(
+  connect(mapStateToProps, mapDispatchToProps)(TodoAddForm)
+)

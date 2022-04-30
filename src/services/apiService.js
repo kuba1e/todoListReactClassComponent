@@ -23,8 +23,32 @@ const todosApi = async (method = 'GET', data, path) => {
         throw new Error(response.status)
       }
       const parsedResponse = await response.json()
-      console.log(parsedResponse)
       return parsedResponse.data
+    }
+
+    if (method === 'PUT') {
+      response = await fetch(`${baseUrl}/${path}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (!response.ok) {
+        throw new Error(response.status)
+      }
+      return
+    }
+    if (method === 'DELETE') {
+      response = await fetch(`${baseUrl}/${path}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) {
+        throw new Error(response.status)
+      }
+      return
     }
   } catch (error) {
     throw new Error(error)

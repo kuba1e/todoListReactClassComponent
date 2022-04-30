@@ -1,3 +1,8 @@
-import { fetchTodos } from './asyncFoo'
+import {
+  fetchTodos,
+  sendToAddTodo,
+  sentToUpdateTodo,
+  sendToDeleteTodo
+} from './asyncFoo'
 
-export { fetchTodos }
+export { fetchTodos, sendToAddTodo, sentToUpdateTodo, sendToDeleteTodo }

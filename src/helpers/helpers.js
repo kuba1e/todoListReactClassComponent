@@ -83,8 +83,7 @@ export const editTodo = (todoForEdit, todos) => {
   return todos.map((todo) => {
     if (todo.id === todoForEdit.id) {
       return {
-        ...todo,
-        label: todoForEdit.label
+        ...todoForEdit
       }
     }
     return todo
