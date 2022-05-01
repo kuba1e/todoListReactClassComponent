@@ -3,6 +3,7 @@ import {
   getTodos,
   addTodo,
   editTodo,
+  toggleAllDoneTodo,
   failedToFetch,
   deleteTodo
 } from '../actions'
@@ -43,6 +44,17 @@ const sentToUpdateTodo = (todosApi) => (todo) => {
   }
 }
 
+const sentToUpdateAllTodo = (todosApi) => (status) => {
+  return async (dispatch) => {
+    try {
+      await todosApi('PUT', { done: status })
+      dispatch(toggleAllDoneTodo(status))
+    } catch (error) {
+      dispatch(failedToFetch(error.message))
+    }
+  }
+}
+
 const sendToDeleteTodo = (todosApi) => (id) => {
   return async (dispatch) => {
     try {
@@ -54,4 +66,10 @@ const sendToDeleteTodo = (todosApi) => (id) => {
   }
 }
 
-export { fetchTodos, sendToAddTodo, sentToUpdateTodo, sendToDeleteTodo }
+export {
+  fetchTodos,
+  sendToAddTodo,
+  sentToUpdateTodo,
+  sendToDeleteTodo,
+  sentToUpdateAllTodo
+}

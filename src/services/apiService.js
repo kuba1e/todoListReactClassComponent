@@ -27,7 +27,7 @@ const todosApi = async (method = 'GET', data, path) => {
     }
 
     if (method === 'PUT') {
-      response = await fetch(`${baseUrl}/${path}`, {
+      response = await fetch(`${baseUrl}${path ? `/${path}` : ''}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

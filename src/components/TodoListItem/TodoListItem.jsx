@@ -43,14 +43,18 @@ export default class TodoListItem extends Component {
     emitter.emit('SET_EDITED_TODO_ACTIVE', id)
   }
 
+  onCheckboxChange = () => {
+    const { onToggleDone, todo } = this.props
+    const { done } = todo
+    onToggleDone({ ...todo, done: !done })
+  }
+
   render() {
-    const {
-      todo: { id, done },
-      onToggleDone,
-      editedTodo
-    } = this.props
+    const { todo, editedTodo } = this.props
 
     const { isButtonActive, inputValue } = this.state
+
+    const { id, done } = todo
 
     const isInputActive = editedTodo === id
 
@@ -90,7 +94,7 @@ export default class TodoListItem extends Component {
       >
         <Checkbox
           className={isInputActive ? 'checkbox--hide' : ''}
-          onChange={() => onToggleDone(id)}
+          onChange={this.onCheckboxChange}
           checked={done}
         />
         {todoBody}

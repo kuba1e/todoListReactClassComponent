@@ -1,7 +1,6 @@
 import {
   ACTION_ADD_TO_DO,
   ACTION_DELETE_TO_DO,
-  ACTION_TOGGLE_DONE_TO_DO,
   ACTION_TOGGLE_DONE_ALL_TO_DO,
   ACTION_CLEAR_COMPLETED_TO_DO,
   ACTION_SET_FILTER_VALUE,
@@ -13,7 +12,6 @@ import {
 
 import {
   deleteTodo,
-  toggleDoneTodo,
   toggleAllDoneTodo,
   clearCompletedTodo,
   editTodo
@@ -38,11 +36,7 @@ export const todoReducer = (state, { type, payload }) => {
         ...state,
         todos: deleteTodo(payload, state.todos)
       }
-    case ACTION_TOGGLE_DONE_TO_DO:
-      return {
-        ...state,
-        todos: toggleDoneTodo(payload, state.todos)
-      }
+
     case ACTION_TOGGLE_DONE_ALL_TO_DO:
       return {
         ...state,

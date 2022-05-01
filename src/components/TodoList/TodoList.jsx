@@ -8,9 +8,8 @@ import './TodoList.scss'
 import ConfirmModal from '../UI/ConfirmModal'
 import emitter from '../../EventEmitter'
 import TodoListItem from '../TodoListItem'
-import Loader from '../Lader'
+import Loader from '../Loader'
 
-import { deleteTodo, toggleDoneTodo } from '../../store/actions'
 import { getFilteredTodosList } from '../../helpers'
 import withTodosApi from '../hocHelpers'
 import {
@@ -152,7 +151,7 @@ const mapDispatchToProps = (dispatch, { todosApi }) => {
     {
       deleteTodo: sendToDeleteTodo(todosApi),
       editTodo: sentToUpdateTodo(todosApi),
-      toggleDoneTodo,
+      toggleDoneTodo: sentToUpdateTodo(todosApi),
       getTodos: fetchTodos(todosApi)
     },
     dispatch

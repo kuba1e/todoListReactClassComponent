@@ -8,12 +8,14 @@ import './TodoHeader.scss'
 import Button from '../UI/Button'
 import TodoAddForm from '../TodoAddForm'
 
-import { toggleAllDoneTodo } from '../../store/actions'
+import { sentToUpdateAllTodo } from '../../store/asyncFoo'
 import { areAllCompleted } from '../../helpers'
 
+import withTodosApi from '../hocHelpers'
+
 class TodoHeader extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isSelected: false
     }
@@ -22,7 +24,8 @@ class TodoHeader extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { isSelected } = this.state
     const { toggleAllDoneTodo } = this.props
-    if (prevState.isSelected !== isSelected) {
+    if (prevState.isSelected !== this.state.isSelected) {
+      console.log(isSelected)
       toggleAllDoneTodo(isSelected)
     }
   }
@@ -57,8 +60,13 @@ const mapStateToProps = ({ todos }) => {
   return { todos }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ toggleAllDoneTodo }, dispatch)
+const mapDispatchToProps = (dispatch, { todosApi }) => {
+  return bindActionCreators(
+    { toggleAllDoneTodo: sentToUpdateAllTodo(todosApi) },
+    dispatch
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoHeader)
+export default withTodosApi(
+  connect(mapStateToProps, mapDispatchToProps)(TodoHeader)
+)

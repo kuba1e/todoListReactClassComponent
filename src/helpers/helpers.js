@@ -3,7 +3,7 @@ export const getCompletedQuantity = (todos) => {
 }
 
 export const areAllCompleted = (todos) => {
-  return !(todos.length - getCompletedQuantity(todos)) && todos.length
+  return !(todos.length - getCompletedQuantity(todos) && todos.length)
 }
 
 export const getTodoCount = (todos) => {
@@ -56,10 +56,11 @@ export const createTodo = (label, todos) => {
 export const deleteTodo = (id, todos) => {
   return todos.filter((todo) => todo.id !== id)
 }
+/*
 
-export const toggleDoneTodo = (id, todos) => {
+export const toggleDoneTodo = (todoForUpdate, todos) => {
   return todos.map((todo) => {
-    if (todo.id === id) {
+    if (todo.id === todoForUpdate.id) {
       return {
         ...todo,
         done: !todo.done
@@ -68,6 +69,7 @@ export const toggleDoneTodo = (id, todos) => {
     return todo
   })
 }
+*/
 
 export const toggleAllDoneTodo = (status, todos) => {
   return todos.map((todo) => {
