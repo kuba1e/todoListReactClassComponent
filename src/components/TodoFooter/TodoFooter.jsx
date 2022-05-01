@@ -26,7 +26,13 @@ const filters = [
 
 class TodoFooter extends Component {
   render() {
-    const { setFilterValue, clearCompleted, todos, filterValue } = this.props
+    const { setFilterValue, clearCompleted, todos, filterValue, loading } =
+      this.props
+
+    if (loading === 'pending' || loading === 'failed') {
+      return null
+    }
+
     return (
       <div className='todo__control'>
         <div className='todo__control-count'>
@@ -71,13 +77,15 @@ TodoFooter.propTypes = {
   setFilterValue: PropTypes.func,
   clearCompleted: PropTypes.func,
   todos: PropTypes.array,
+  loading: PropTypes.string,
   filterValue: PropTypes.string
 }
 
-const mapStateToProps = ({ todos, filterValue }) => {
+const mapStateToProps = ({ todos, filterValue, loading }) => {
   return {
     todos,
-    filterValue
+    filterValue,
+    loading
   }
 }
 

@@ -6,17 +6,21 @@ import PropTypes from 'prop-types'
 import './TodoList.scss'
 
 import ConfirmModal from '../UI/ConfirmModal'
-import emitter from '../../EventEmitter'
 import TodoListItem from '../TodoListItem'
 import Loader from '../Loader'
+import TodoHeader from '../TodoHeader'
+import ErrorIndicator from '../ErrorIndicator'
 
-import { getFilteredTodosList } from '../../helpers'
-import withTodosApi from '../hocHelpers'
 import {
+  sentToUpdateAllTodo,
   fetchTodos,
   sentToUpdateTodo,
   sendToDeleteTodo
 } from '../../store/asyncFoo'
+import { getFilteredTodosList } from '../../helpers'
+import withTodosApi from '../hocHelpers'
+
+import emitter from '../../EventEmitter'
 
 class TodoList extends Component {
   constructor() {
@@ -36,13 +40,6 @@ class TodoList extends Component {
     emitter.subscribe('MODAL_SHOW_BTN', this.onShowBtnHandler)
     emitter.subscribe('MODAL_DELETE_TODO', this.onDeleteTodoHandler)
     emitter.subscribe('SET_EDITED_TODO_ACTIVE', this.onEditedTodoActive)
-  }
-
-  componentDidUpdate(prevProps) {
-    const { todos } = this.props
-    if (prevProps.todos !== todos) {
-      localStorage.setItem('todos', JSON.stringify(todos))
-    }
   }
 
   componentWillUnmount() {
@@ -85,10 +82,14 @@ class TodoList extends Component {
       setEditedTodoValue,
       filterValue,
       toggleDoneTodo,
+      toggleAllDoneTodo,
       editTodo,
-      loading
+      loading,
+      error
     } = this.props
+
     const { isConfirmModalActive, editedTodoActive } = this.state
+
     const todosForRendering = getFilteredTodosList(filterValue, todos)
 
     const confirmodal = isConfirmModalActive ? (
@@ -97,8 +98,13 @@ class TodoList extends Component {
       </ConfirmModal>
     ) : null
 
+    const todosHeader =
+      loading === 'succeded' && !error ? (
+        <TodoHeader todos={todos} toggleAllDoneTodo={toggleAllDoneTodo} />
+      ) : null
+
     const todoElements =
-      loading === 'succeded'
+      loading === 'succeded' && !error
         ? todosForRendering.map((todo) => {
             return (
               <TodoListItem
@@ -113,11 +119,17 @@ class TodoList extends Component {
           })
         : null
 
-    const loader = loading === 'pending' ? <Loader /> : null
+    const loader = loading === 'pending' && !error ? <Loader /> : null
+    const errorIndicator =
+      error && loading === 'failed' ? (
+        <ErrorIndicator errorMessage={error} />
+      ) : null
 
     return (
       <>
         {confirmodal}
+        {errorIndicator}
+        {todosHeader}
         <ul
           className={`todo__list ${
             loading === 'pending' ? 'todo__list--pending' : ''
@@ -135,15 +147,17 @@ TodoList.propTypes = {
   getTodos: PropTypes.func,
   todos: PropTypes.array,
   loading: PropTypes.string,
+  error: PropTypes.string,
   filterValue: PropTypes.string,
   editTodo: PropTypes.func,
   deleteTodo: PropTypes.func,
   setEditedTodoValue: PropTypes.func,
-  toggleDoneTodo: PropTypes.func
+  toggleDoneTodo: PropTypes.func,
+  toggleAllDoneTodo: PropTypes.func
 }
 
-const mapStateToProps = ({ todos, filterValue, loading }) => {
-  return { todos, filterValue, loading }
+const mapStateToProps = ({ todos, filterValue, loading, error }) => {
+  return { todos, filterValue, loading, error }
 }
 
 const mapDispatchToProps = (dispatch, { todosApi }) => {
@@ -152,7 +166,8 @@ const mapDispatchToProps = (dispatch, { todosApi }) => {
       deleteTodo: sendToDeleteTodo(todosApi),
       editTodo: sentToUpdateTodo(todosApi),
       toggleDoneTodo: sentToUpdateTodo(todosApi),
-      getTodos: fetchTodos(todosApi)
+      getTodos: fetchTodos(todosApi),
+      toggleAllDoneTodo: sentToUpdateAllTodo(todosApi)
     },
     dispatch
   )

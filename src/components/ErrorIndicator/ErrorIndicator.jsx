@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 
 export default class ErrorIndicator extends Component {
   render() {
-    const { error } = this.props
+    const { errorMessage } = this.props
 
     return (
       <div className='error-boundray'>
-        <p>Ooops, something went wrong, error:{error}</p>
+        <p>Ooops, something went wrong, error: {errorMessage}</p>
       </div>
     )
   }
 }
 
 ErrorIndicator.propTypes = {
-  error: PropTypes.string
+  errorMessage: PropTypes.string
 }

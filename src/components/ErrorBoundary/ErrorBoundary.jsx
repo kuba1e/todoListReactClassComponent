@@ -21,7 +21,7 @@ export default class ErrorBoundary extends Component {
     const { error } = this.state
     const { children } = this.props
 
-    const content = error ? <ErrorIndicator error={error} /> : children
+    const content = error ? <ErrorIndicator errorMessage={error} /> : children
 
     return content
   }
