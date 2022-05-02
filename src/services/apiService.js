@@ -8,13 +8,13 @@ const getFetchOptions = (method, token, data) => {
     credentials: 'include'
   }
 
-  if (method !== 'GET' && Object.keys(data).length) {
+  if (method !== 'GET' && data) {
     options.body = JSON.stringify(data)
   }
   return options
 }
 
-const apiService = async (method = 'GET', data, path) => {
+const apiService = async (method = 'GET', path, data) => {
   try {
     const baseUrl = 'http://localhost:4000'
     const token = localStorage.getItem('token') ?? ''

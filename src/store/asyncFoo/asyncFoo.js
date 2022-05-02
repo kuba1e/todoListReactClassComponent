@@ -17,7 +17,7 @@ const loginUser = (apiService) => (data) => {
   return async (dispatch) => {
     try {
       dispatch(requestedToFetch())
-      const userData = await apiService('POST', data, '/login')
+      const userData = await apiService('POST', '/login', data)
 
       const isUserDataEmpty = isObjectEmpty(userData.data)
       if (isUserDataEmpty) {
@@ -36,7 +36,7 @@ const userRegistration = (apiService) => (data) => {
   return async (dispatch) => {
     try {
       dispatch(requestedToFetch())
-      const userData = await apiService('POST', data, '/registration')
+      const userData = await apiService('POST', '/registration', data)
 
       const isUserDataEmpty = isObjectEmpty(userData.data)
       if (isUserDataEmpty) {
@@ -55,7 +55,7 @@ const logoutUser = (apiService) => () => {
   return async (dispatch) => {
     try {
       dispatch(requestedToFetch())
-      await apiService('POST', {}, '/logout')
+      await apiService('POST', '/logout')
       dispatch(setAuthStatus(false))
       dispatch(setUserData({}))
 
@@ -69,7 +69,7 @@ const logoutUser = (apiService) => () => {
 const checkAuth = (apiService) => () => {
   return async (dispatch) => {
     try {
-      const response = await apiService('GET', {}, '/refresh')
+      const response = await apiService('GET', '/refresh')
 
       dispatch(setAuthStatus(true))
       dispatch(setUserData(response.data.user))
@@ -85,7 +85,7 @@ const fetchTodos = (apiService) => () => {
   return async (dispatch) => {
     try {
       dispatch(requestedToFetch())
-      const todos = await apiService('GET', null, '/todos')
+      const todos = await apiService('GET', '/todos')
       dispatch(getTodos(todos.data))
     } catch (error) {
       dispatch(failedToFetch(error.message))
@@ -97,7 +97,7 @@ const sendToAddTodo = (apiService) => (label) => {
   return async (dispatch) => {
     try {
       const newTodo = { label, done: false }
-      const reply = await apiService('POST', newTodo, '/todos')
+      const reply = await apiService('POST', '/todos', newTodo)
       dispatch(addTodo(reply.data))
     } catch (error) {
       dispatch(failedToFetch(error.message))
@@ -109,7 +109,7 @@ const sentToUpdateTodo = (apiService) => (todo) => {
   return async (dispatch) => {
     try {
       const { id, ...todoData } = todo
-      await apiService('PUT', todoData, `/todos/${id}`)
+      await apiService('PUT', `/todos/${id}`, todoData)
       dispatch(editTodo(todo))
     } catch (error) {
       dispatch(failedToFetch(error.message))
@@ -120,7 +120,7 @@ const sentToUpdateTodo = (apiService) => (todo) => {
 const sentToUpdateAllTodo = (apiService) => (status) => {
   return async (dispatch) => {
     try {
-      await apiService('PUT', { done: status }, '/todos')
+      await apiService('PUT', '/todos', { done: status })
       dispatch(toggleAllDoneTodo(status))
     } catch (error) {
       dispatch(failedToFetch(error.message))
@@ -131,7 +131,7 @@ const sentToUpdateAllTodo = (apiService) => (status) => {
 const sendToDeleteTodo = (apiService) => (id) => {
   return async (dispatch) => {
     try {
-      await apiService('DELETE', {}, `/todos/${id}`)
+      await apiService('DELETE', `/todos/${id}`)
       dispatch(deleteTodo(id))
     } catch (error) {
       dispatch(failedToFetch(error.message))
@@ -146,7 +146,7 @@ const sendToDeleteCompletedTodo = (apiService) => (todos) => {
         .filter((todo) => todo.done)
         .map((todo) => todo.id)
 
-      await apiService('DELETE', { todos: todosForDeleting }, '/todos')
+      await apiService('DELETE', '/todos', { todos: todosForDeleting })
       dispatch(clearCompleted())
     } catch (error) {
       dispatch(failedToFetch(error.message))
