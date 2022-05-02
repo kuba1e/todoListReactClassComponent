@@ -1,3 +1,5 @@
+const getFetchOptions = () => {}
+
 const todosApi = async (method = 'GET', data, path) => {
   try {
     const baseUrl = 'http://localhost:4000'
@@ -11,10 +13,10 @@ const todosApi = async (method = 'GET', data, path) => {
         },
         credentials: 'include'
       })
-      if (!response.ok) {
-        throw new Error(response.status)
-      }
       const parsedResponse = await response.json()
+      if (!response.ok) {
+        throw new Error(parsedResponse.message)
+      }
       return parsedResponse
     }
     if (method === 'POST') {
@@ -28,10 +30,10 @@ const todosApi = async (method = 'GET', data, path) => {
         credentials: 'include'
       })
 
-      if (!response.ok) {
-        throw new Error(response.status)
-      }
       const parsedResponse = await response.json()
+      if (!response.ok) {
+        throw new Error(parsedResponse.message)
+      }
       return parsedResponse
     }
 
@@ -46,11 +48,31 @@ const todosApi = async (method = 'GET', data, path) => {
         credentials: 'include'
       })
 
+      const parsedResponse = await response.json()
       if (!response.ok) {
-        throw new Error(response.status)
+        throw new Error(parsedResponse.message)
       }
       return
     }
+
+    if (method === 'DELETE' && path === '/todos') {
+      response = await fetch(`${baseUrl}${path}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+
+      const parsedResponse = await response.json()
+      if (!response.ok) {
+        throw new Error(parsedResponse.message)
+      }
+      return
+    }
+
     if (method === 'DELETE') {
       response = await fetch(`${baseUrl}${path}`, {
         method: 'DELETE',
@@ -60,8 +82,9 @@ const todosApi = async (method = 'GET', data, path) => {
         credentials: 'include'
       })
 
+      const parsedResponse = await response.json()
       if (!response.ok) {
-        throw new Error(response.status)
+        throw new Error(parsedResponse.message)
       }
       return
     }

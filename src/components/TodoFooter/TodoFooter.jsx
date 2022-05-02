@@ -7,8 +7,10 @@ import './TodoFooter.scss'
 
 import Button from '../UI/Button'
 
-import { clearCompleted, setFilterValue } from '../../store/actions'
+import { setFilterValue } from '../../store/actions'
 import { getCompletedQuantity, getTodoCount } from '../../helpers'
+import withTodosApi from '../hocHelpers'
+import { sendToDeleteCompletedTodo } from '../../store/asyncFoo'
 
 const filters = [
   {
@@ -64,7 +66,7 @@ class TodoFooter extends Component {
           className={`clear-completed-btn ${
             getCompletedQuantity(todos) ? 'clear-completed-btn--active' : ''
           }`}
-          onClick={clearCompleted}
+          onClick={() => clearCompleted(todos)}
         >
           Clear completed
         </Button>
@@ -89,8 +91,13 @@ const mapStateToProps = ({ todos, filterValue, loading }) => {
   }
 }
 
-const mapDispatchToProps = (dispath) => {
-  return bindActionCreators({ clearCompleted, setFilterValue }, dispath)
+const mapDispatchToProps = (dispath, { todosApi }) => {
+  return bindActionCreators(
+    { clearCompleted: sendToDeleteCompletedTodo(todosApi), setFilterValue },
+    dispath
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoFooter)
+export default withTodosApi(
+  connect(mapStateToProps, mapDispatchToProps)(TodoFooter)
+)

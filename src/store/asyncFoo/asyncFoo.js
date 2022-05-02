@@ -4,6 +4,7 @@ import {
   addTodo,
   editTodo,
   toggleAllDoneTodo,
+  clearCompleted,
   failedToFetch,
   deleteTodo,
   setAuthStatus,
@@ -140,12 +141,28 @@ const sendToDeleteTodo = (todosApi) => (id) => {
   }
 }
 
+const sendToDeleteCompletedTodo = (todosApi) => (todos) => {
+  return async (dispatch) => {
+    try {
+      const todosForDeleting = todos
+        .filter((todo) => todo.done)
+        .map((todo) => todo.id)
+
+      await todosApi('DELETE', { todos: todosForDeleting }, '/todos')
+      dispatch(clearCompleted())
+    } catch (error) {
+      dispatch(failedToFetch(error.message))
+    }
+  }
+}
+
 export {
   fetchTodos,
   sendToAddTodo,
   sentToUpdateTodo,
   sendToDeleteTodo,
   sentToUpdateAllTodo,
+  sendToDeleteCompletedTodo,
   loginUser,
   logoutUser,
   userRegistration,
