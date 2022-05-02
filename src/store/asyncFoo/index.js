@@ -3,7 +3,11 @@ import {
   sendToAddTodo,
   sentToUpdateAllTodo,
   sentToUpdateTodo,
-  sendToDeleteTodo
+  sendToDeleteTodo,
+  loginUser,
+  logoutUser,
+  userRegistration,
+  checkAuth
 } from './asyncFoo'
 
 export {
@@ -11,5 +15,9 @@ export {
   sendToAddTodo,
   sentToUpdateTodo,
   sendToDeleteTodo,
-  sentToUpdateAllTodo
+  sentToUpdateAllTodo,
+  loginUser,
+  logoutUser,
+  userRegistration,
+  checkAuth
 }

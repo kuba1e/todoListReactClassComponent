@@ -7,7 +7,9 @@ import {
   ACTION_GET_TODOS,
   ACTION_EDIT_TO_DO,
   ACTION_REQUESTED_TO_FETCH,
-  ACTION_FAILED_TO_FETCH
+  ACTION_FAILED_TO_FETCH,
+  ACTION_SET_USER_DATA,
+  ACTION_SET_AUTH_STATUS
 } from '../actions'
 
 import {
@@ -21,7 +23,9 @@ const initialState = {
   todos: [],
   filterValue: 'all',
   loading: 'idle',
-  error: null
+  error: null,
+  user: {},
+  isAuth: false
 }
 
 export const todoReducer = (state, { type, payload }) => {
@@ -76,6 +80,20 @@ export const todoReducer = (state, { type, payload }) => {
         ...state,
         todos: editTodo(payload, state.todos)
       }
+
+    case ACTION_SET_USER_DATA:
+      return {
+        ...state,
+        loading: 'succeded',
+        user: payload
+      }
+
+    case ACTION_SET_AUTH_STATUS:
+      return {
+        ...state,
+        isAuth: payload
+      }
+
     default:
       return initialState
   }

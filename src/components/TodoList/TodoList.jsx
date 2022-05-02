@@ -15,7 +15,8 @@ import {
   sentToUpdateAllTodo,
   fetchTodos,
   sentToUpdateTodo,
-  sendToDeleteTodo
+  sendToDeleteTodo,
+  checkAuth
 } from '../../store/asyncFoo'
 import { getFilteredTodosList } from '../../helpers'
 import withTodosApi from '../hocHelpers'
@@ -33,7 +34,10 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    const { getTodos } = this.props
+    const { getTodos, checkAuth } = this.props
+    if (localStorage.getItem('token')) {
+      checkAuth()
+    }
     getTodos()
 
     emitter.subscribe('MODAL_CLOSE_BTN', this.onCloseHandler)
@@ -153,7 +157,8 @@ TodoList.propTypes = {
   deleteTodo: PropTypes.func,
   setEditedTodoValue: PropTypes.func,
   toggleDoneTodo: PropTypes.func,
-  toggleAllDoneTodo: PropTypes.func
+  toggleAllDoneTodo: PropTypes.func,
+  checkAuth: PropTypes.func
 }
 
 const mapStateToProps = ({ todos, filterValue, loading, error }) => {
@@ -167,7 +172,8 @@ const mapDispatchToProps = (dispatch, { todosApi }) => {
       editTodo: sentToUpdateTodo(todosApi),
       toggleDoneTodo: sentToUpdateTodo(todosApi),
       getTodos: fetchTodos(todosApi),
-      toggleAllDoneTodo: sentToUpdateAllTodo(todosApi)
+      toggleAllDoneTodo: sentToUpdateAllTodo(todosApi),
+      checkAuth
     },
     dispatch
   )

@@ -44,3 +44,15 @@ export const failedToFetch = (error) => ({
   type: ACTION_FAILED_TO_FETCH,
   payload: error
 })
+
+export const ACTION_SET_USER_DATA = 'ACTION_SET_USER_DATA'
+export const setUserData = (userData) => ({
+  type: ACTION_SET_USER_DATA,
+  payload: userData
+})
+
+export const ACTION_SET_AUTH_STATUS = 'ACTION_SET_AUTH_STATUS'
+export const setAuthStatus = (status) => ({
+  type: ACTION_SET_AUTH_STATUS,
+  payload: status
+})

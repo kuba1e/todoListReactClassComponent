@@ -9,6 +9,8 @@ import {
   ACTION_EDIT_TO_DO,
   ACTION_REQUESTED_TO_FETCH,
   ACTION_FAILED_TO_FETCH,
+  ACTION_SET_USER_DATA,
+  ACTION_SET_AUTH_STATUS,
   addTodo,
   deleteTodo,
   toggleDoneTodo,
@@ -18,7 +20,9 @@ import {
   getTodos,
   editTodo,
   requestedToFetch,
-  failedToFetch
+  failedToFetch,
+  setUserData,
+  setAuthStatus
 } from './actions'
 
 export {
@@ -31,7 +35,9 @@ export {
   ACTION_GET_TODOS,
   ACTION_EDIT_TO_DO,
   ACTION_REQUESTED_TO_FETCH,
-  ACTION_FAILED_TO_FETCH
+  ACTION_FAILED_TO_FETCH,
+  ACTION_SET_USER_DATA,
+  ACTION_SET_AUTH_STATUS
 }
 export {
   addTodo,
@@ -43,5 +49,7 @@ export {
   getTodos,
   editTodo,
   requestedToFetch,
-  failedToFetch
+  failedToFetch,
+  setUserData,
+  setAuthStatus
 }
