@@ -84,8 +84,8 @@ const mapStateToProps = ({ editedValue }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, { todosApi }) => {
-  return bindActionCreators({ addTodo: sendToAddTodo(todosApi) }, dispatch)
+const mapDispatchToProps = (dispatch, { apiService }) => {
+  return bindActionCreators({ addTodo: sendToAddTodo(apiService) }, dispatch)
 }
 
 export default withTodosApi(

@@ -165,15 +165,15 @@ const mapStateToProps = ({ todos, filterValue, loading, error }) => {
   return { todos, filterValue, loading, error }
 }
 
-const mapDispatchToProps = (dispatch, { todosApi }) => {
+const mapDispatchToProps = (dispatch, { apiService }) => {
   return bindActionCreators(
     {
-      deleteTodo: sendToDeleteTodo(todosApi),
-      editTodo: sentToUpdateTodo(todosApi),
-      toggleDoneTodo: sentToUpdateTodo(todosApi),
-      getTodos: fetchTodos(todosApi),
-      toggleAllDoneTodo: sentToUpdateAllTodo(todosApi),
-      checkAuth
+      deleteTodo: sendToDeleteTodo(apiService),
+      editTodo: sentToUpdateTodo(apiService),
+      toggleDoneTodo: sentToUpdateTodo(apiService),
+      getTodos: fetchTodos(apiService),
+      toggleAllDoneTodo: sentToUpdateAllTodo(apiService),
+      checkAuth: checkAuth(apiService)
     },
     dispatch
   )

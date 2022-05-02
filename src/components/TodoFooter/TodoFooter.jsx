@@ -91,9 +91,9 @@ const mapStateToProps = ({ todos, filterValue, loading }) => {
   }
 }
 
-const mapDispatchToProps = (dispath, { todosApi }) => {
+const mapDispatchToProps = (dispath, { apiService }) => {
   return bindActionCreators(
-    { clearCompleted: sendToDeleteCompletedTodo(todosApi), setFilterValue },
+    { clearCompleted: sendToDeleteCompletedTodo(apiService), setFilterValue },
     dispath
   )
 }

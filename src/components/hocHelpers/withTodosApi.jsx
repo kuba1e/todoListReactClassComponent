@@ -6,8 +6,8 @@ const withTodosApi = (Wrapped) => {
   return function (props) {
     return (
       <TodosApiConsumer>
-        {(todosApi) => {
-          return <Wrapped {...props} todosApi={todosApi} />
+        {(apiService) => {
+          return <Wrapped {...props} apiService={apiService} />
         }}
       </TodosApiConsumer>
     )

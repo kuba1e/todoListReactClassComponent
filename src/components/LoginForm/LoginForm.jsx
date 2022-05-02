@@ -79,12 +79,12 @@ LoginForm.propTypes = {
   userRegistration: PropTypes.func
 }
 
-const mapDispathToProps = (dispatch, { todosApi }) => {
+const mapDispathToProps = (dispatch, { apiService }) => {
   return bindActionCreators(
     {
-      loginUser: loginUser(todosApi),
-      userRegistration: userRegistration(todosApi),
-      logoutUser: logoutUser(todosApi)
+      loginUser: loginUser(apiService),
+      userRegistration: userRegistration(apiService),
+      logoutUser: logoutUser(apiService)
     },
     dispatch
   )

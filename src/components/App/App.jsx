@@ -9,12 +9,12 @@ import TodoFooter from '../TodoFooter'
 import LoginForm from '../LoginForm'
 
 import { TodosApiProvider } from '../todosApiContext'
-import todosApi from '../../services/apiService'
+import apiService from '../../services/apiService'
 
 export default class App extends Component {
   render() {
     return (
-      <TodosApiProvider value={todosApi}>
+      <TodosApiProvider value={apiService}>
         <Title>todos</Title>
         <LoginForm />
         <ErrorBoundary>

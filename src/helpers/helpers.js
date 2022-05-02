@@ -56,20 +56,6 @@ export const createTodo = (label, todos) => {
 export const deleteTodo = (id, todos) => {
   return todos.filter((todo) => todo.id !== id)
 }
-/*
-
-export const toggleDoneTodo = (todoForUpdate, todos) => {
-  return todos.map((todo) => {
-    if (todo.id === todoForUpdate.id) {
-      return {
-        ...todo,
-        done: !todo.done
-      }
-    }
-    return todo
-  })
-}
-*/
 
 export const toggleAllDoneTodo = (status, todos) => {
   return todos.map((todo) => {
@@ -92,6 +78,6 @@ export const editTodo = (todoForEdit, todos) => {
   })
 }
 
-export const isEditedTodoEmpty = (todo) => {
-  return !Object.keys(todo).length
+export const isObjectEmpty = (data) => {
+  return !Object.keys(data).length
 }

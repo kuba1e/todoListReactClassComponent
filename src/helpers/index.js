@@ -8,7 +8,7 @@ import {
   toggleAllDoneTodo,
   clearCompletedTodo,
   editTodo,
-  isEditedTodoEmpty
+  isObjectEmpty
 } from './helpers'
 
 export {
@@ -21,5 +21,5 @@ export {
   toggleAllDoneTodo,
   clearCompletedTodo,
   editTodo,
-  isEditedTodoEmpty
+  isObjectEmpty
 }
